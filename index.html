@@ -1026,16 +1026,7 @@
           <div class="poster-card">
             <div class="poster-frame">
               <img id="posterImage" class="poster-image" alt="JBTI 人格海报" hidden />
-              <div id="posterFallback" class="poster-fallback">
-                <div class="poster-fallback-inner">
-                  <div id="posterCode" class="poster-code">MOYU</div>
-                  <div id="posterName" class="poster-name">摸鱼选手</div>
-                  <div class="poster-meta">当前还没放最终海报，先用占位卡顶着。</div>
-                  <div id="posterFile" class="poster-file">new_images/moyu.png</div>
-                </div>
-              </div>
             </div>
-            <p id="posterNote" class="poster-note">结果图会自动按代号匹配，只有缺图时才会回退到占位卡。</p>
           </div>
 
           <div class="result-card">
@@ -1860,20 +1851,11 @@
 
     async function renderPoster(type) {
       const posterImage = document.getElementById("posterImage");
-      const posterFallback = document.getElementById("posterFallback");
-      const posterCode = document.getElementById("posterCode");
-      const posterName = document.getElementById("posterName");
-      const posterFile = document.getElementById("posterFile");
-      const posterNote = document.getElementById("posterNote");
+      if (!posterImage) return;
       const candidatePaths = getPosterCandidatePaths(type);
-      const expectedPath = candidatePaths[0].replace(/^\.\//, "");
       const requestToken = ++posterRenderToken;
 
-      posterCode.textContent = type.code;
-      posterName.textContent = type.name;
-      posterFile.textContent = expectedPath;
       posterImage.hidden = true;
-      posterFallback.hidden = false;
       posterImage.alt = `${type.code} ${type.name}`;
       posterImage.removeAttribute("src");
 
@@ -1884,24 +1866,13 @@
             return;
           }
 
-          posterFile.textContent = loadedPath.replace(/^\.\//, "");
-          posterNote.textContent = "已检测到海报文件，结果页会直接显示图片。";
           posterImage.src = loadedPath;
           posterImage.hidden = false;
-          posterFallback.hidden = true;
           return;
         } catch (error) {
           continue;
         }
       }
-
-      if (requestToken !== posterRenderToken) {
-        return;
-      }
-
-      posterNote.textContent = type.hidden
-        ? `当前没有检测到 ${expectedPath}，隐藏结果先显示占位卡。`
-        : `当前没有检测到 ${expectedPath}，所以先显示占位卡。`;
     }
 
     function renderRankList(result) {
