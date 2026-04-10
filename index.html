@@ -92,6 +92,25 @@
       padding: 28px 16px 64px;
     }
 
+    #intro {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    #intro .card {
+      border-color: #dbe8dd;
+      background: #ffffff;
+      box-shadow: 0 16px 40px rgba(47, 73, 55, 0.08);
+      backdrop-filter: none;
+    }
+
+    #intro .btn-primary {
+      background: #4d6a53;
+      color: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(77, 106, 83, 0.18);
+    }
+
     .screen {
       display: none;
     }
@@ -128,6 +147,40 @@
       color: rgba(157, 60, 30, 0.06);
       pointer-events: none;
       font-family: "STZhongsong", "Songti SC", serif;
+    }
+
+    .hero-minimal {
+      min-height: 48vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      text-align: center;
+      padding: 42px 20px;
+    }
+
+    .hero-minimal::before {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(127, 165, 134, 0.18), rgba(127, 165, 134, 0.02));
+      pointer-events: none;
+    }
+
+    .hero-minimal::after {
+      display: none;
+    }
+
+    .hero-title-minimal {
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: none;
     }
 
     .eyebrow {
@@ -168,6 +221,30 @@
       align-items: center;
       gap: 12px;
       margin-top: 24px;
+    }
+
+    .hero-actions-single {
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    .intro-meta {
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .intro-meta a {
+      color: var(--accent-strong);
+      text-decoration: none;
+    }
+
+    .intro-meta a:hover {
+      text-decoration: underline;
     }
 
     .btn-primary,
@@ -892,74 +969,18 @@
 <body>
   <div class="page">
     <section id="intro" class="screen active">
-      <div class="hero card">
-        <div>
-          <div class="eyebrow">JBTI · Joking But True</div>
-          <h1 class="hero-title">无聊，但很真。<br />这是给日常破事做的人格测试。</h1>
-          <p class="hero-lead">
-            JBTI 全称是 <strong>Joke Bored Personality Test</strong>，也可以理解成
-            <strong>Joking But True</strong>。它不玩抽象神神叨叨，专盯打工、吃饭、社交、
-            恋爱这些接地气的小场景，用 30 道题把你平时的那点习惯、怂劲、嘴硬和小聪明都翻出来。
-          </p>
-
-          <div class="hero-actions">
-            <button id="startBtn" class="btn-primary">开始测试</button>
-            <button id="jumpToTypesBtn" class="btn-secondary">先看人格预告</button>
-          </div>
-
-          <div class="stats-grid">
-            <div class="stat-card">
-              <strong>30</strong>
-              <span>题目全部换成工作、生活、恋爱里的日常梗，没有旧版 15 维人格那套。</span>
-            </div>
-            <div class="stat-card">
-              <strong>16 + 2</strong>
-              <span>16 个常规人格，外加 2 个隐藏结果，触发后会自动存进当前浏览器。</span>
-            </div>
-            <div class="stat-card">
-              <strong>确定结果</strong>
-              <span>平分时走固定签运算法，同一套答案永远得到同一个结果，但看起来像抽签。</span>
-            </div>
-          </div>
-
-          <p class="hero-note">
-            新版海报入口已经全部切到 `new_images/&lt;小写代号&gt;.(png|jpg|jpeg|webp)`。现在没图时会显示占位卡，
-            你后续把新图补进 `new_images/` 目录就能直接接上，不会再读旧版那些图片名。
-          </p>
+      <div class="hero card hero-minimal">
+        <h1 class="hero-title-minimal">MBTI已经过时，JBTI来了。</h1>
+        <div class="hero-actions hero-actions-single">
+          <button id="startBtn" class="btn-primary">开始测试</button>
         </div>
-
-        <div class="hero-side">
-          <div class="side-card">
-            <h3>隐藏结果存档</h3>
-            <p>彩蛋不会在首页直接剧透触发条件，但一旦打出来，就会保存在当前浏览器里。</p>
-            <div id="unlockSummary" class="unlock-line">尚未解锁</div>
-          </div>
-
-          <div id="typePreview" class="side-card">
-            <h3>16 种主结果</h3>
-            <p>从摸鱼、摆烂、干饭、吃瓜，到嘴硬、社恐、卷王、独行，都是日常能对号入座的类型。</p>
-            <div id="typeCloud" class="type-cloud"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="intro-bottom">
-        <div class="side-card">
-          <h3>这个版本改了什么</h3>
-          <div class="list-note">
-            <div>旧的 SBTI 标题、旧作者区块、旧 15 维人格模型和旧图片映射都已经退出主舞台。</div>
-            <div>结果逻辑改成了显性计分：每个选项都直接投给一个人格，再叠加隐藏结果判定。</div>
-            <div>缺图时不会爆红叉，而是显示对应代号占位，方便你后续逐张补图。</div>
-          </div>
-        </div>
-
-        <div class="side-card">
-          <h3>使用说明</h3>
-          <div class="list-note">
-            <div>题目按三个生活区块排开：工作/学习、生活日常、恋爱/社交。</div>
-            <div>你需要把 30 题全部做完，系统才会放结果页。</div>
-            <div>本测试只负责吐槽，不负责诊断、求职、相亲、人生判决或任何严肃学术用途。</div>
-          </div>
+        <div class="intro-meta">
+          <span>
+            原作者：
+            <a href="https://space.bilibili.com/417038183">B站@蛆肉儿串儿</a>
+          </span>
+          <span>托管：Cloudflare (免费)</span>
+          <span>域名：Spaceship (自费)</span>
         </div>
       </div>
     </section>
@@ -989,7 +1010,7 @@
 
         <div class="test-actions">
           <div class="footer-note">
-            图片占位已经预埋到每个结果里，测试逻辑先走通；等你后续补图时，按代号命名文件即可。
+            结果图会优先读取 `new_images/代号.(png|jpg|jpeg|webp)`；只有没找到对应文件时才会显示占位卡。
           </div>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
             <button id="clearBtn" class="btn-ghost">清空答案</button>
@@ -1010,11 +1031,11 @@
                   <div id="posterCode" class="poster-code">MOYU</div>
                   <div id="posterName" class="poster-name">摸鱼选手</div>
                   <div class="poster-meta">当前还没放最终海报，先用占位卡顶着。</div>
-                  <div id="posterFile" class="poster-file">new_images/moyu.(png|jpg|jpeg|webp)</div>
+                  <div id="posterFile" class="poster-file">new_images/moyu.png</div>
                 </div>
               </div>
             </div>
-            <p id="posterNote" class="poster-note">等你补图后，这里会直接显示新版海报。</p>
+            <p id="posterNote" class="poster-note">结果图会自动按代号匹配，只有缺图时才会回退到占位卡。</p>
           </div>
 
           <div class="result-card">
@@ -1562,6 +1583,7 @@
     const testHint = document.getElementById("testHint");
     const unlockSummary = document.getElementById("unlockSummary");
     const typeCloud = document.getElementById("typeCloud");
+    let posterRenderToken = 0;
 
     function showScreen(name) {
       Object.entries(screens).forEach(([key, node]) => {
@@ -1599,6 +1621,7 @@
     }
 
     function renderUnlockSummary() {
+      if (!unlockSummary) return;
       const unlocks = getUnlocks();
       if (!unlocks.length) {
         unlockSummary.textContent = "尚未解锁";
@@ -1608,6 +1631,7 @@
     }
 
     function renderTypeCloud() {
+      if (!typeCloud) return;
       typeCloud.innerHTML = NORMAL_TYPE_CODES.map(code => {
         const type = TYPES[code];
         return `<span class="type-pill"><b>${type.code}</b>${type.name}</span>`;
@@ -1818,50 +1842,66 @@
       };
     }
 
-    function renderPoster(type) {
+    function getPosterCandidatePaths(type) {
+      const extensions = ["png", "jpg", "jpeg", "webp"];
+      const basePosterPath = type.poster.replace(/\.(png|jpg|jpeg|webp)$/i, "");
+      return [type.poster, ...extensions.map(extension => `${basePosterPath}.${extension}`)]
+        .filter((path, index, list) => list.indexOf(path) === index);
+    }
+
+    function probePoster(path) {
+      return new Promise((resolve, reject) => {
+        const probe = new Image();
+        probe.onload = () => resolve(path);
+        probe.onerror = () => reject(path);
+        probe.src = path;
+      });
+    }
+
+    async function renderPoster(type) {
       const posterImage = document.getElementById("posterImage");
       const posterFallback = document.getElementById("posterFallback");
       const posterCode = document.getElementById("posterCode");
       const posterName = document.getElementById("posterName");
       const posterFile = document.getElementById("posterFile");
       const posterNote = document.getElementById("posterNote");
-      const extensions = ["png", "jpg", "jpeg", "webp"];
-      const basePosterPath = type.poster.replace(/\.(png|jpg|jpeg|webp)$/i, "");
-      const candidatePaths = extensions.map(extension => `${basePosterPath}.${extension}`);
+      const candidatePaths = getPosterCandidatePaths(type);
+      const expectedPath = candidatePaths[0].replace(/^\.\//, "");
+      const requestToken = ++posterRenderToken;
 
       posterCode.textContent = type.code;
       posterName.textContent = type.name;
-      posterFile.textContent = `new_images/${type.code.toLowerCase()}.(png|jpg|jpeg|webp)`;
-      posterNote.textContent = type.hidden
-        ? "隐藏结果的图位也已经预留好。你后续把对应文件补进 new_images/ 目录即可。"
-        : "当前没有检测到这张海报，所以先显示占位卡；补上同名文件后会自动顶替。";
-
+      posterFile.textContent = expectedPath;
       posterImage.hidden = true;
       posterFallback.hidden = false;
       posterImage.alt = `${type.code} ${type.name}`;
+      posterImage.removeAttribute("src");
 
-      let currentIndex = 0;
-      const tryNextPoster = () => {
-        const nextPath = candidatePaths[currentIndex];
-        if (!nextPath) {
-          posterImage.removeAttribute("src");
-          posterImage.hidden = true;
-          posterFallback.hidden = false;
-          return;
-        }
+      for (const path of candidatePaths) {
+        try {
+          const loadedPath = await probePoster(path);
+          if (requestToken !== posterRenderToken) {
+            return;
+          }
 
-        currentIndex += 1;
-        posterImage.onload = () => {
+          posterFile.textContent = loadedPath.replace(/^\.\//, "");
+          posterNote.textContent = "已检测到海报文件，结果页会直接显示图片。";
+          posterImage.src = loadedPath;
           posterImage.hidden = false;
           posterFallback.hidden = true;
-        };
-        posterImage.onerror = () => {
-          tryNextPoster();
-        };
-        posterImage.src = nextPath;
-      };
+          return;
+        } catch (error) {
+          continue;
+        }
+      }
 
-      tryNextPoster();
+      if (requestToken !== posterRenderToken) {
+        return;
+      }
+
+      posterNote.textContent = type.hidden
+        ? `当前没有检测到 ${expectedPath}，隐藏结果先显示占位卡。`
+        : `当前没有检测到 ${expectedPath}，所以先显示占位卡。`;
     }
 
     function renderRankList(result) {
@@ -1972,9 +2012,6 @@
     }
 
     document.getElementById("startBtn").addEventListener("click", startTest);
-    document.getElementById("jumpToTypesBtn").addEventListener("click", () => {
-      document.getElementById("typePreview").scrollIntoView({ behavior: "smooth", block: "start" });
-    });
     document.getElementById("backIntroBtn").addEventListener("click", () => showScreen("intro"));
     document.getElementById("clearBtn").addEventListener("click", clearAnswers);
     document.getElementById("submitBtn").addEventListener("click", renderResult);
