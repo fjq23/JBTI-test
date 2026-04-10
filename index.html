@@ -3,773 +3,1055 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SBTI 人格测试</title>
+  <title>JBTI 人格测试</title>
   <style>
     :root {
-      --bg: #f6faf6;
-      --panel: #ffffff;
-      --text: #1e2a22;
-      --muted: #6a786f;
-      --line: #dbe8dd;
-      --soft: #edf6ef;
-      --accent: #6c8d71;
-      --accent-strong: #4d6a53;
-      --shadow: 0 16px 40px rgba(47, 73, 55, 0.08);
-      --radius: 22px;
+      --bg: #f5efe6;
+      --bg-deep: #efe3d3;
+      --panel: rgba(255, 250, 244, 0.92);
+      --panel-strong: #fffaf4;
+      --text: #2a2118;
+      --muted: #7f6a58;
+      --line: rgba(114, 79, 43, 0.18);
+      --line-strong: rgba(114, 79, 43, 0.32);
+      --accent: #c75d2c;
+      --accent-strong: #9d3c1e;
+      --accent-soft: #f6d8c5;
+      --teal: #2a7f78;
+      --teal-soft: #d5efea;
+      --yellow: #f2b84b;
+      --shadow: 0 24px 60px rgba(76, 43, 24, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
     }
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      background:
-        radial-gradient(circle at top left, #f8fff8 0, #f6faf6 36%, #f2f7f3 100%);
-      color: var(--text);
       min-height: 100vh;
+      color: var(--text);
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(242, 184, 75, 0.18), transparent 24%),
+        radial-gradient(circle at 86% 12%, rgba(42, 127, 120, 0.18), transparent 22%),
+        linear-gradient(180deg, #fbf4eb 0%, #f5efe6 48%, #efe5d8 100%);
     }
 
-    .shell {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 24px 16px 56px;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .hero {
-      padding: 28px;
-      margin-top: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero::after {
+    body::before {
       content: "";
-      position: absolute;
-      right: -60px;
-      top: -60px;
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, rgba(127, 165, 134, 0.18), rgba(127, 165, 134, 0.02));
+      position: fixed;
+      inset: 0;
       pointer-events: none;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 80%);
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      color: var(--accent-strong);
-      border: 1px solid var(--line);
-      background: var(--soft);
-      border-radius: 999px;
-      padding: 8px 12px;
-      margin-bottom: 16px;
-    }
-
-    h1, h2, h3, p { margin: 0; }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 52px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      max-width: 680px;
-    }
-    .hero .sub {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.75;
-      max-width: 720px;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap: 18px;
-      align-items: stretch;
-      margin-top: 24px;
-    }
-
-    .mini-panel {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #fbfefb, #f3f8f4);
-    }
-
-    .mini-panel h3 {
-      font-size: 15px;
-      margin-bottom: 10px;
-    }
-
-    .mini-panel ul {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-        .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
-    }
-    .hero-minimal {
-      min-height: 48vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 42px 20px;
-    }
-    .hero-minimal::after { display: none; }
-    .hero-minimal h1 {
-      max-width: none;
+    h1, h2, h3, p {
       margin: 0;
     }
-    .hero-actions-single {
-      justify-content: center;
-      margin-top: 28px;
+
+    button, input {
+      font: inherit;
     }
 
     button {
       border: 0;
       cursor: pointer;
-      transition: transform .16s ease, box-shadow .16s ease, opacity .16s ease;
-      font: inherit;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
     }
 
-    button:hover { transform: translateY(-1px); }
-    button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      transform: none;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 16px 64px;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+      gap: 22px;
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "JBTI";
+      position: absolute;
+      right: -18px;
+      top: -30px;
+      font-size: clamp(92px, 16vw, 180px);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+      color: rgba(157, 60, 30, 0.06);
+      pointer-events: none;
+      font-family: "STZhongsong", "Songti SC", serif;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin-top: 18px;
+      font-family: "STZhongsong", "Songti SC", serif;
+      font-size: clamp(34px, 6vw, 66px);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      max-width: 760px;
+    }
+
+    .hero-lead {
+      margin-top: 18px;
+      max-width: 720px;
+      color: #4b3a2c;
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-weight: 700;
+    }
 
     .btn-primary {
-      background: var(--accent-strong);
-      color: #fff;
-      padding: 14px 20px;
-      border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(77, 106, 83, 0.18);
-      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #fff8f3;
+      box-shadow: 0 16px 34px rgba(157, 60, 30, 0.28);
     }
 
     .btn-secondary {
-      background: #fff;
-      color: var(--accent-strong);
-      padding: 14px 20px;
-      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--text);
       border: 1px solid var(--line);
-      font-weight: 700;
     }
 
-    .screen { display: none; }
-    .screen.active { display: block; }
+    .btn-ghost {
+      background: transparent;
+      border: 1px dashed var(--line-strong);
+      color: var(--muted);
+      padding-inline: 16px;
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 760px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+      max-width: 760px;
+    }
+
+    .stat-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.68);
+      padding: 16px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 24px;
+      color: var(--accent-strong);
+      margin-bottom: 6px;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .hero-side {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .side-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 248, 241, 0.92));
+      padding: 18px;
+    }
+
+    .side-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .side-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.85;
+    }
+
+    .unlock-line {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(42, 127, 120, 0.12), rgba(42, 127, 120, 0.02));
+      border: 1px solid rgba(42, 127, 120, 0.18);
+      color: #24544f;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .type-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .type-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--line);
+      color: #544230;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .type-pill b {
+      color: var(--accent-strong);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .intro-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .list-note {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .list-note div {
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.62);
+      color: #53402f;
+      font-size: 14px;
+      line-height: 1.75;
+    }
 
     .test-wrap,
     .result-wrap {
-      margin-top: 22px;
-      padding: 22px;
+      padding: 24px;
     }
 
-    .topbar {
+    .test-top {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .test-head {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 16px;
-      margin-bottom: 18px;
       flex-wrap: wrap;
     }
 
-    .progress {
-      flex: 1;
-      min-width: 240px;
-      height: 10px;
-      background: #edf3ee;
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
+    .test-head h1 {
+      font-family: "STZhongsong", "Songti SC", serif;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
     }
 
-    .progress > span {
+    .test-head p {
+      margin-top: 8px;
+      max-width: 680px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .progress-bar {
+      flex: 1;
+      min-width: 220px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(157, 60, 30, 0.1);
+      overflow: hidden;
+    }
+
+    .progress-bar > span {
       display: block;
       width: 0;
       height: 100%;
-      background: linear-gradient(90deg, #97b59c, #5b7a62);
       border-radius: inherit;
-      transition: width .22s ease;
+      background: linear-gradient(90deg, var(--yellow), var(--accent));
+      transition: width 0.22s ease;
     }
 
     .progress-text {
-      color: var(--muted);
+      color: var(--accent-strong);
       font-size: 13px;
+      font-weight: 700;
       white-space: nowrap;
     }
 
-    .question-list {
+    .hint-box {
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, rgba(201, 93, 44, 0.12), rgba(255, 255, 255, 0.46));
+      border: 1px solid rgba(201, 93, 44, 0.18);
+      color: #603926;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .section-stack {
       display: grid;
-      gap: 16px;
+      gap: 18px;
+      margin-top: 20px;
     }
 
-    .question {
+    .section-card {
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: var(--radius-xl);
+      background: rgba(255, 255, 255, 0.68);
       padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbfdfb);
     }
 
-    .question-meta {
-      display: flex;
-      justify-content: space-between;
+    .section-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
       align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-index {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--teal), #1d5a55);
+      color: #f4fffd;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 14px 26px rgba(42, 127, 120, 0.24);
+    }
+
+    .section-head h2 {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    .question-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .question-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(114, 79, 43, 0.14);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 250, 244, 0.94));
+      padding: 16px;
+    }
+
+    .question-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
       margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .question-order {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(201, 93, 44, 0.08);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .question-type {
       color: var(--muted);
       font-size: 12px;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      padding: 6px 10px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-    }
-
     .question-title {
       font-size: 16px;
-      line-height: 1.7;
-      white-space: pre-wrap;
+      line-height: 1.8;
+      color: #34281d;
     }
 
-    .options {
+    .option-list {
       display: grid;
       gap: 10px;
       margin-top: 14px;
     }
 
     .option {
-      display: flex;
-      align-items: flex-start;
+      position: relative;
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: start;
       gap: 12px;
-      padding: 14px 14px;
-      border-radius: 14px;
+      padding: 14px;
+      border-radius: var(--radius-md);
       border: 1px solid var(--line);
-      background: #fff;
-      transition: border-color .16s ease, background .16s ease, transform .16s ease;
+      background: rgba(255, 255, 255, 0.88);
+      transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+      cursor: pointer;
     }
 
     .option:hover {
-      border-color: #bcd0c1;
-      background: #f8fcf9;
+      transform: translateY(-1px);
+      border-color: rgba(201, 93, 44, 0.28);
+      box-shadow: 0 12px 20px rgba(76, 43, 24, 0.06);
+    }
+
+    .option.selected {
+      border-color: rgba(201, 93, 44, 0.42);
+      background: linear-gradient(135deg, rgba(248, 223, 205, 0.88), rgba(255, 255, 255, 0.98));
+      box-shadow: 0 14px 26px rgba(201, 93, 44, 0.12);
     }
 
     .option input {
-      margin-top: 3px;
-      accent-color: var(--accent-strong);
-      transform: scale(1.1);
-      flex-shrink: 0;
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .option-code {
+    .option-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(114, 79, 43, 0.24);
+      background: #fff;
+      margin-top: 1px;
+      transition: border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .option.selected .option-mark {
+      border-color: var(--accent-strong);
+      background: radial-gradient(circle at center, var(--accent) 0 38%, #fff 42% 100%);
+      box-shadow: 0 0 0 5px rgba(201, 93, 44, 0.1);
+    }
+
+    .option-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 10px;
+      background: rgba(42, 127, 120, 0.1);
+      color: var(--teal);
       font-weight: 800;
-      color: var(--accent-strong);
-      min-width: 22px;
+      font-size: 13px;
     }
 
-    .actions-bottom {
+    .option span:last-child {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #423225;
+    }
+
+    .test-actions,
+    .result-actions {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 18px;
-      padding-top: 6px;
+      margin-top: 24px;
     }
 
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .result-hero {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .type-box,
-    .score-box,
-    .dim-box,
-    .top3-box,
-    .about-box {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbfdfb);
-    }
-
-    .type-kicker {
-      font-size: 12px;
-      color: var(--accent-strong);
-      margin-bottom: 8px;
-      letter-spacing: .05em;
-    }
-
-    .type-name {
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
-
-    .type-subname {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .match {
-      margin-top: 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-      color: var(--accent-strong);
-      font-weight: 700;
-    }
-
-    .type-desc {
-      margin-top: 18px;
-      line-height: 1.85;
-      font-size: 15px;
-      color: #304034;
-    }
-
-    .score-box h3,
-    .dim-box h3,
-    .top3-box h3,
-    .about-box h3 {
-      font-size: 16px;
-      margin-bottom: 12px;
-    }
-
-    .score-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .score-item {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .score-item .k {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .score-item .v {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent-strong);
-    }
-
-    .dim-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .dim-pill {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .dim-pill .label {
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
-
-    .dim-pill .value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent-strong);
-    }
-
-    .top3-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .top3-item {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 12px;
-      background: #fff;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .top3-item strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .top3-item span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .top3-score {
-      color: var(--accent-strong);
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .about-box p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
-    }
-
-    .footer-note {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
-    }
-
-    
-    .result-layout {
-      display: grid;
-      gap: 18px;
-    }
     .result-top {
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 18px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 20px;
     }
-    .poster-box, .type-box, .analysis-box, .dim-box, .note-box {
+
+    .poster-card,
+    .result-card,
+    .panel {
+      border-radius: var(--radius-xl);
       border: 1px solid var(--line);
-      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
       padding: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbfdfb);
     }
-        .poster-box {
-      display: grid;
-      grid-template-rows: 1fr auto;
-      min-height: 280px;
-      overflow: hidden;
+
+    .poster-frame {
       position: relative;
+      min-height: 440px;
+      border-radius: 22px;
+      overflow: hidden;
       background:
-        radial-gradient(circle at top right, rgba(127,165,134,0.16), rgba(127,165,134,0) 40%),
-        linear-gradient(180deg, #ffffff, #f7fbf8);
+        radial-gradient(circle at top right, rgba(42, 127, 120, 0.16), transparent 34%),
+        linear-gradient(180deg, #fffaf4 0%, #f6eadb 100%);
+      border: 1px solid rgba(114, 79, 43, 0.12);
     }
-    .poster-box::after {
-      content: "";
-      position: absolute;
-      right: -46px;
-      bottom: -46px;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, rgba(127,165,134,0.12), rgba(127,165,134,0.01));
-      pointer-events: none;
-    }
+
     .poster-image {
       width: 100%;
-      min-height: 220px;
-      max-height: 460px;
-      object-fit: contain;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.75);
-      position: relative;
-      z-index: 1;
+      height: 100%;
+      min-height: 440px;
+      object-fit: cover;
+      display: block;
+      background: #f7efe6;
     }
-    .poster-box.no-image .poster-image {
-      display: none;
+
+    .poster-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.08)),
+        repeating-linear-gradient(
+          -45deg,
+          rgba(201, 93, 44, 0.14) 0 12px,
+          rgba(255, 255, 255, 0.06) 12px 24px
+        );
     }
-    .poster-caption {
+
+    .poster-fallback-inner {
+      max-width: 280px;
+    }
+
+    .poster-code {
+      font-family: "STZhongsong", "Songti SC", serif;
+      font-size: clamp(42px, 8vw, 82px);
+      letter-spacing: -0.08em;
+      color: rgba(157, 60, 30, 0.92);
+      line-height: 0.95;
+    }
+
+    .poster-name {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .poster-meta {
       margin-top: 14px;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.8;
-      position: relative;
-      z-index: 1;
     }
-    .type-kicker {
+
+    .poster-file {
+      margin-top: 12px;
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      color: #5c4634;
       font-size: 12px;
-      color: var(--accent-strong);
-      margin-bottom: 8px;
-      letter-spacing: .06em;
+      font-weight: 700;
     }
-    .type-name {
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-    }
-    .type-subname {
-      margin-top: 10px;
+
+    .poster-note {
+      margin-top: 14px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.8;
     }
-    .match {
-      margin-top: 18px;
+
+    .mode-line {
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 8px 12px;
       border-radius: 999px;
-      padding: 10px 14px;
-      background: var(--soft);
-      border: 1px solid var(--line);
-      color: var(--accent-strong);
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 1.4;
+      background: rgba(42, 127, 120, 0.1);
+      color: var(--teal);
+      border: 1px solid rgba(42, 127, 120, 0.16);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
-    .analysis-box h3, .dim-box h3, .note-box h3 {
+
+    .result-name {
+      margin-top: 14px;
+      font-family: "STZhongsong", "Songti SC", serif;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .result-subtitle {
+      margin-top: 12px;
+      font-size: 17px;
+      line-height: 1.8;
+      color: #4a382b;
+      font-weight: 600;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: #523f2f;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .badge.accent {
+      background: linear-gradient(135deg, rgba(201, 93, 44, 0.12), rgba(255, 255, 255, 0.78));
+      color: var(--accent-strong);
+    }
+
+    .result-desc {
+      margin-top: 18px;
+      color: #3d2f23;
+      font-size: 15px;
+      line-height: 1.95;
+      white-space: pre-wrap;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+      color: #573f2a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .panel h3 {
       font-size: 16px;
       margin-bottom: 12px;
     }
-    .result-actions {
-      margin-top: 22px;
-      display: flex;
-      justify-content: flex-end;
+
+    .panel p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.85;
     }
-    .analysis-box p {
-      margin: 0;
-      color: #304034;
-      font-size: 15px;
-      line-height: 1.9;
-      white-space: pre-wrap;
-    }
-    .dim-list {
+
+    .rank-list,
+    .scene-list,
+    .note-list {
       display: grid;
-      gap: 12px;
-    }
-    .dim-item {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      background: #fff;
-    }
-    .dim-item-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
       gap: 10px;
-      margin-bottom: 8px;
+    }
+
+    .rank-item,
+    .scene-item,
+    .note-item {
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      padding: 12px 14px;
+    }
+
+    .rank-item-top,
+    .scene-item-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
       flex-wrap: wrap;
     }
-    .dim-item-name {
+
+    .rank-item strong,
+    .scene-item strong,
+    .note-item strong {
       font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
+      color: #3f2e21;
     }
-    .dim-item-score {
+
+    .rank-score,
+    .scene-score {
       color: var(--accent-strong);
+      font-size: 13px;
       font-weight: 800;
-      font-size: 14px;
       white-space: nowrap;
     }
-    .dim-item p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-    }
-    .note-box p {
-      margin: 0;
+
+    .rank-item span,
+    .scene-item span,
+    .note-item span {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.8;
     }
 
-    .author-box {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(180deg, #ffffff, #fbfdfb);
-      overflow: hidden;
-    }
-    .author-box summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 18px;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .author-box summary::-webkit-details-marker { display: none; }
-    .author-box summary::after {
-      content: '展开';
+    .footer-note {
+      margin-top: 20px;
+      color: var(--muted);
       font-size: 12px;
-      font-weight: 700;
-      color: var(--accent-strong);
-      border: 1px solid var(--line);
-      background: var(--soft);
-      padding: 6px 10px;
-      border-radius: 999px;
-      flex-shrink: 0;
-    }
-    .author-box[open] summary::after {
-      content: '收起';
-    }
-    .author-content {
-      border-top: 1px solid var(--line);
-      padding: 0 18px 18px;
-    }
-    .author-content p {
-      margin: 14px 0 0;
-      color: #304034;
-      font-size: 14px;
-      line-height: 1.9;
+      line-height: 1.8;
     }
 
-    .result-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 22px;
-    }
-    @media (max-width: 860px) {
-      .result-top { grid-template-columns: 1fr; }
+    .hidden-inline {
+      display: none;
     }
 
-@media (max-width: 860px) {
-      .hero-grid,
-      .result-hero {
+    .hidden-inline.show {
+      display: inline-flex;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .result-top,
+      .intro-bottom,
+      .panel-grid {
         grid-template-columns: 1fr;
       }
-      .dim-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .poster-frame,
+      .poster-image {
+        min-height: 360px;
+      }
     }
 
-    @media (max-width: 600px) {
-      .shell { padding: 14px 12px 42px; }
-      .hero, .test-wrap, .result-wrap { padding: 16px; }
-      .hero h1 { font-size: 32px; }
-      .question-title { font-size: 15px; }
-      .dim-grid,
-      .score-grid { grid-template-columns: 1fr; }
+    @media (max-width: 720px) {
+      .page {
+        padding: 16px 12px 40px;
+      }
+
+      .hero,
+      .test-wrap,
+      .result-wrap {
+        padding: 16px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .test-actions,
+      .result-actions {
+        align-items: stretch;
+      }
+
+      .test-actions > div,
+      .result-actions > div {
+        width: 100%;
+        display: grid;
+        gap: 10px;
+      }
+
+      .test-actions button,
+      .result-actions button,
+      .hero-actions button {
+        width: 100%;
+      }
+
+      .option {
+        grid-template-columns: auto auto 1fr;
+      }
+
+      .poster-frame,
+      .poster-image {
+        min-height: 300px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
+  <div class="page">
     <section id="intro" class="screen active">
-      <div class="hero card hero-minimal">
-        <h1>MBTI已经过时，SBTI来了。</h1>
-        <div class="hero-actions hero-actions-single">
-          <button id="startBtn" class="btn-primary">开始测试</button>
+      <div class="hero card">
+        <div>
+          <div class="eyebrow">JBTI · Joking But True</div>
+          <h1 class="hero-title">无聊，但很真。<br />这是给日常破事做的人格测试。</h1>
+          <p class="hero-lead">
+            JBTI 全称是 <strong>Joke Bored Personality Test</strong>，也可以理解成
+            <strong>Joking But True</strong>。它不玩抽象神神叨叨，专盯打工、吃饭、社交、
+            恋爱这些接地气的小场景，用 30 道题把你平时的那点习惯、怂劲、嘴硬和小聪明都翻出来。
+          </p>
+
+          <div class="hero-actions">
+            <button id="startBtn" class="btn-primary">开始测试</button>
+            <button id="jumpToTypesBtn" class="btn-secondary">先看人格预告</button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <strong>30</strong>
+              <span>题目全部换成工作、生活、恋爱里的日常梗，没有旧版 15 维人格那套。</span>
+            </div>
+            <div class="stat-card">
+              <strong>16 + 2</strong>
+              <span>16 个常规人格，外加 2 个隐藏结果，触发后会自动存进当前浏览器。</span>
+            </div>
+            <div class="stat-card">
+              <strong>确定结果</strong>
+              <span>平分时走固定签运算法，同一套答案永远得到同一个结果，但看起来像抽签。</span>
+            </div>
+          </div>
+
+          <p class="hero-note">
+            新版海报入口已经全部切到 `new_images/&lt;小写代号&gt;.(png|jpg|jpeg|webp)`。现在没图时会显示占位卡，
+            你后续把新图补进 `new_images/` 目录就能直接接上，不会再读旧版那些图片名。
+          </p>
         </div>
-        <div style="padding-top: 2rem; display: flex; flex-direction: column;">
-          <span>
-            原作者：
-            <a href="https://space.bilibili.com/417038183">B站@蛆肉儿串儿</a>
-          </span>
-          <span>
-            托管：Cloudflare (免费)
-          </span>
-          <span>
-            域名：Spaceship (自费)
-          </span>
+
+        <div class="hero-side">
+          <div class="side-card">
+            <h3>隐藏结果存档</h3>
+            <p>彩蛋不会在首页直接剧透触发条件，但一旦打出来，就会保存在当前浏览器里。</p>
+            <div id="unlockSummary" class="unlock-line">尚未解锁</div>
+          </div>
+
+          <div id="typePreview" class="side-card">
+            <h3>16 种主结果</h3>
+            <p>从摸鱼、摆烂、干饭、吃瓜，到嘴硬、社恐、卷王、独行，都是日常能对号入座的类型。</p>
+            <div id="typeCloud" class="type-cloud"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="intro-bottom">
+        <div class="side-card">
+          <h3>这个版本改了什么</h3>
+          <div class="list-note">
+            <div>旧的 SBTI 标题、旧作者区块、旧 15 维人格模型和旧图片映射都已经退出主舞台。</div>
+            <div>结果逻辑改成了显性计分：每个选项都直接投给一个人格，再叠加隐藏结果判定。</div>
+            <div>缺图时不会爆红叉，而是显示对应代号占位，方便你后续逐张补图。</div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <h3>使用说明</h3>
+          <div class="list-note">
+            <div>题目按三个生活区块排开：工作/学习、生活日常、恋爱/社交。</div>
+            <div>你需要把 30 题全部做完，系统才会放结果页。</div>
+            <div>本测试只负责吐槽，不负责诊断、求职、相亲、人生判决或任何严肃学术用途。</div>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="test" class="screen">
       <div class="test-wrap card">
-        <div class="topbar">
-          <div class="progress"><span id="progressBar"></span></div>
-          <div class="progress-text" id="progressText">0 / 31</div>
+        <div class="test-top">
+          <div class="test-head">
+            <div>
+              <h1>JBTI 正式开测</h1>
+              <p>不用演，不用端着，按照你最真实也最烦人的那一面选。全部做完才会放行。</p>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button id="backIntroBtn" class="btn-secondary">返回首页</button>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-bar"><span id="progressBar"></span></div>
+            <div id="progressText" class="progress-text">0 / 30</div>
+          </div>
+
+          <div id="testHint" class="hint-box">全做完再交卷。世界已经够乱了，至少把题先做完整。</div>
         </div>
 
-        <div id="questionList" class="question-list"></div>
+        <div id="questionSections" class="section-stack"></div>
 
-        <div class="actions-bottom">
-          <div class="hint" id="testHint">全选完才会放行。世界已经够乱了，起码把题做完整。</div>
+        <div class="test-actions">
+          <div class="footer-note">
+            图片占位已经预埋到每个结果里，测试逻辑先走通；等你后续补图时，按代号命名文件即可。
+          </div>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <button id="backIntroBtn" class="btn-secondary">返回首页</button>
+            <button id="clearBtn" class="btn-ghost">清空答案</button>
             <button id="submitBtn" class="btn-primary" disabled>提交并查看结果</button>
           </div>
         </div>
       </div>
     </section>
 
-    
     <section id="result" class="screen">
       <div class="result-wrap card">
-        <div class="result-layout">
-          <div class="result-top">
-            <div class="poster-box" id="posterBox">
-              <img id="posterImage" class="poster-image" alt="人格结果图" />
-              <div id="posterCaption" class="poster-caption">怎么样，被我拿捏了吧？</div>
+        <div class="result-top">
+          <div class="poster-card">
+            <div class="poster-frame">
+              <img id="posterImage" class="poster-image" alt="JBTI 人格海报" hidden />
+              <div id="posterFallback" class="poster-fallback">
+                <div class="poster-fallback-inner">
+                  <div id="posterCode" class="poster-code">MOYU</div>
+                  <div id="posterName" class="poster-name">摸鱼选手</div>
+                  <div class="poster-meta">当前还没放最终海报，先用占位卡顶着。</div>
+                  <div id="posterFile" class="poster-file">new_images/moyu.(png|jpg|jpeg|webp)</div>
+                </div>
+              </div>
             </div>
+            <p id="posterNote" class="poster-note">等你补图后，这里会直接显示新版海报。</p>
+          </div>
 
-            <div class="type-box">
-              <div class="type-kicker" id="resultModeKicker">你的主类型</div>
-              <div class="type-name" id="resultTypeName">CTRL（拿捏者）</div>
-              <div class="match" id="matchBadge">匹配度 92%</div>
-              <div class="type-subname" id="resultTypeSub">系统备注会显示在这里。</div>
+          <div class="result-card">
+            <div id="resultMode" class="mode-line">你的主结果</div>
+            <div id="resultName" class="result-name">MOYU 摸鱼选手</div>
+            <div id="resultSubtitle" class="result-subtitle">把命留住，比把表演做满更重要。</div>
+            <div class="badge-row">
+              <div id="voteBadge" class="badge">主导票数 0</div>
+              <div id="tieBadge" class="badge accent">平分签运未触发</div>
+              <div id="hiddenBadge" class="badge accent hidden-inline">隐藏结果</div>
             </div>
+            <p id="resultDesc" class="result-desc"></p>
+            <div id="keywordList" class="chip-list"></div>
+          </div>
+        </div>
+
+        <div class="panel-grid">
+          <div class="panel">
+            <h3>高频人格 Top 3</h3>
+            <div id="rankList" class="rank-list"></div>
           </div>
 
-          <div class="analysis-box">
-            <h3>该人格的简单解读</h3>
-            <p id="resultDesc"></p>
+          <div class="panel">
+            <h3>三大场景切片</h3>
+            <div id="sceneList" class="scene-list"></div>
           </div>
 
-          <div class="dim-box">
-            <h3>十五维度评分</h3>
-            <div id="dimList" class="dim-list"></div>
+          <div class="panel">
+            <h3>结果备注</h3>
+            <div id="noteList" class="note-list"></div>
           </div>
-
-          <div class="note-box">
-            <h3>友情提示</h3>
-            <p id="funNote">本测试仅供娱乐，别拿它当诊断、面试、相亲、分手、招魂、算命或人生判决书。</p>
-          </div>
-
-                    <details class="author-box">
-            <summary>作者的话</summary>
-            <div class="author-content">
-              <p>本测试首发于b站up主蛆肉儿串儿（UID417038183），初衷是劝诫一位爱喝酒的朋友戒酒。</p>
-              <p>由于作者的人格是SHIT愤世者，所以平等的攻击了各位，在此抱歉！！不过我是一个绝世大美女，你们一定会原谅我，有B站的朋友们也可以关注我。</p>
-              <p>关于这个测试，我没法很好的平衡娱乐和专业性，因此对于一些人格的阐释较为模糊或完全不准（如屌丝可能并非真的屌丝），如有冒犯非常抱歉！！</p>
-              <p>再鉴于时间精力有限，就随便搞了一个先这样玩玩，后续会慢慢完善修改的，总之好玩为主，还请不要用于盈利呀。</p>
-            </div>
-          </details>
         </div>
 
         <div class="result-actions">
+          <div class="footer-note">
+            本测试仅供娱乐。你可以截图发朋友圈说“这就是我”，但别把它当心理诊断、相亲筛选、团队管理或命运判词。
+          </div>
           <div style="display:flex; gap:12px; flex-wrap:wrap;">
             <button id="restartBtn" class="btn-secondary">重新测试</button>
             <button id="toTopBtn" class="btn-primary">回到首页</button>
@@ -777,971 +1059,932 @@
         </div>
       </div>
     </section>
-
   </div>
 
-  
   <script>
-    const dimensionMeta = {
-      S1: { name: 'S1 自尊自信', model: '自我模型' },
-      S2: { name: 'S2 自我清晰度', model: '自我模型' },
-      S3: { name: 'S3 核心价值', model: '自我模型' },
-      E1: { name: 'E1 依恋安全感', model: '情感模型' },
-      E2: { name: 'E2 情感投入度', model: '情感模型' },
-      E3: { name: 'E3 边界与依赖', model: '情感模型' },
-      A1: { name: 'A1 世界观倾向', model: '态度模型' },
-      A2: { name: 'A2 规则与灵活度', model: '态度模型' },
-      A3: { name: 'A3 人生意义感', model: '态度模型' },
-      Ac1: { name: 'Ac1 动机导向', model: '行动驱力模型' },
-      Ac2: { name: 'Ac2 决策风格', model: '行动驱力模型' },
-      Ac3: { name: 'Ac3 执行模式', model: '行动驱力模型' },
-      So1: { name: 'So1 社交主动性', model: '社交模型' },
-      So2: { name: 'So2 人际边界感', model: '社交模型' },
-      So3: { name: 'So3 表达与真实度', model: '社交模型' }
+    const STORAGE_KEY = "jbti-hidden-unlocks";
+
+    const SECTIONS = [
+      { key: "work", index: "01", title: "工作/学习篇", subtitle: "卷不动也躺不平" },
+      { key: "life", index: "02", title: "生活日常篇", subtitle: "一个人也能演出戏" },
+      { key: "love", index: "03", title: "恋爱/社交篇", subtitle: "又菜又爱玩" }
+    ];
+
+    const TYPES = {
+      MOYU: {
+        code: "MOYU",
+        name: "摸鱼选手",
+        tagline: "把命留住，比把表演做满更重要。",
+        desc: "你不是完全不做事，你只是擅长把精力精准投放到“刚好别出事”的范围里。能省的流程先省，能晚的动作先晚，表面像散漫，实际上很会判断什么值得认真、什么只是白白消耗。你的人生信条不是不上进，而是别把自己交给无意义的内耗。",
+        keywords: ["反卷雷达", "工位隐身", "能混就混"],
+        poster: "./new_images/moyu.png",
+        short: "脑子里常驻一条弹幕：先别急着认真。"
+      },
+      BAIL: {
+        code: "BAIL",
+        name: "摆烂达人",
+        tagline: "天塌下来先让我再睡五分钟。",
+        desc: "你对很多宏大叙事都保持淡定，KPI、别人的期待、朋友圈表演欲，到你这都自动降噪。不是完全没想法，是你太清楚很多折腾根本不值当，所以优先把自己从无意义的拉扯里捞出来。你可能不高产，但很懂怎么活得省心。",
+        keywords: ["精神省电", "拒绝内耗", "先躺再说"],
+        poster: "./new_images/bail.png",
+        short: "世界很吵，但你决定先把它调成静音。"
+      },
+      SHE: {
+        code: "SHE",
+        name: "社恐星民",
+        tagline: "能打字就不语音，能线上就不见面。",
+        desc: "社交场对你来说像临时副本，打开方式稍有不对就会开始卡顿。你不一定冷漠，只是启动成本高，尴尬记忆保存得比聊天记录还久。人少时你挺正常，人一多就想立刻隐身，这份谨慎里藏着你很重视边界和体面。",
+        keywords: ["低调启动", "尴尬预警", "安全距离"],
+        poster: "./new_images/she.png",
+        short: "你不是没话说，你只是先担心自己说错。"
+      },
+      NIU: {
+        code: "NIU",
+        name: "社交悍匪",
+        tagline: "见谁都能唠两句，尴尬到了你这都会热起来。",
+        desc: "你对陌生感的耐受度很高，甚至会主动上去把冷场改造成热场。任何群体里，只要你想开麦，气氛就不会太闷。别人要攒勇气的地方，你靠本能就能冲进去，所以你常常是局里的润滑剂、热场器和情报站。",
+        keywords: ["热场机器", "见人能聊", "气氛担当"],
+        poster: "./new_images/niu.png",
+        short: "你的人生像自带社交免死金牌。"
+      },
+      CHI: {
+        code: "CHI",
+        name: "干饭冠军",
+        tagline: "很多问题都能先靠一顿饭缓一缓。",
+        desc: "你的情绪和胃口常常绑在一起，开心要吃，不开心更要吃。你不是简单爱吃，而是很清楚食物在生活里的治愈力和仪式感。别人研究人生意义的时候，你可能已经在研究哪家火锅底料更配今天的心情了。",
+        keywords: ["饭点优先", "快乐加餐", "食欲驱动"],
+        poster: "./new_images/chi.png",
+        short: "你的人生坐标轴，一半按心情，一半按饭点。"
+      },
+      CUN: {
+        code: "CUN",
+        name: "省钱大师",
+        tagline: "消费之前，先和钱包开一次董事会。",
+        desc: "你不是抠，你是把每一块钱都当成战略物资。满减、拼单、团购、账单复盘都是基本功，省下来的不只是钱，还有一种“我没被消费主义骗到”的安全感。别人冲动下单时，你脑子里已经把性价比、替代方案和月底现金流都过了一遍。",
+        keywords: ["预算战神", "满减雷达", "消费复盘"],
+        poster: "./new_images/cun.png",
+        short: "花钱之前，你先问它值不值。"
+      },
+      LOVE: {
+        code: "LOVE",
+        name: "恋爱脑",
+        tagline: "只要心动一点点，脑内连续剧就能自动开机。",
+        desc: "你对情感投入得快，也投得深。一个眼神、一句关心、一次约饭，都足够让你脑补出很多后续剧情。你并不傻，只是太愿意相信关系里的温度，所以别人觉得过于投入的地方，在你看来只是认真生活和认真喜欢。",
+        keywords: ["心动放大器", "情绪上头", "粉红滤镜"],
+        poster: "./new_images/love.png",
+        short: "你把很多细节，都当成爱意的证据。"
+      },
+      DU: {
+        code: "DU",
+        name: "独行孤狼",
+        tagline: "独处不是退而求其次，是主动选择的清净。",
+        desc: "你对独处的适配度很高，不需要靠热闹来证明自己过得不错。比起被局、被催、被打扰，你更喜欢按自己的节奏活。你不是对关系完全没需求，只是很清楚边界、空间和自由感对你来说有多贵。",
+        keywords: ["独处续命", "边界清晰", "低耗社交"],
+        poster: "./new_images/du.png",
+        short: "一个人不一定惨，很多时候反而更舒展。"
+      },
+      HAHA: {
+        code: "HAHA",
+        name: "傻乐憨憨",
+        tagline: "笑点低一点，日子会轻很多。",
+        desc: "你有把鸡毛蒜皮过成喜剧片的能力，梗来得快，笑也来得快。别人还在琢磨要不要严肃起来，你已经把场面拐进了轻松频道。不是你不理解现实，而是你知道笑一笑有时候比绷着更有用。",
+        keywords: ["笑点超低", "气氛减压", "梗感过剩"],
+        poster: "./new_images/haha.png",
+        short: "你的人生技能之一，是把沉重翻译成好笑。"
+      },
+      EMO: {
+        code: "EMO",
+        name: "网抑云精",
+        tagline: "别人看一盏路灯，你能看到人生。",
+        desc: "你的情绪触角比多数人灵敏得多，夜里尤其明显。歌、天色、路灯、朋友圈文案，都可能被你读出第二层、第三层甚至第十层意味。你不是故意矫情，只是感受力太强，所以很多别人能一笔带过的东西，你真的会放在心里。",
+        keywords: ["深夜频道", "情绪细嗅", "路灯文学"],
+        poster: "./new_images/emo.png",
+        short: "心里一旦起雾，就容易把世界都看湿。"
+      },
+      JUAN: {
+        code: "JUAN",
+        name: "卷王本王",
+        tagline: "嘴上佛系，身体早就把进度条拉满了。",
+        desc: "你可能不爱承认自己卷，但只要看到差距、待办或者别人的成果，体内那台推进器就会自动点火。效率、完成度和领先感对你有天然吸引力。别人以为你只是认真，你自己知道那更像一种停不下来的内部驱动。",
+        keywords: ["暗中加速", "进度条成瘾", "偷偷努力"],
+        poster: "./new_images/juan.png",
+        short: "你看起来不急，但你的待办列表很急。"
+      },
+      ZUI: {
+        code: "ZUI",
+        name: "嘴硬王者",
+        tagline: "心里早妥协了，嘴上还是要先顶一下。",
+        desc: "你最会保护的不是面子本身，而是那点最后的心理防线。很多时候你已经后悔、心软、服软了，嘴上却还是得先把自己守住。你不是一定想赢，你只是还没准备好把脆弱直接亮给别人看。",
+        keywords: ["嘴上逞强", "死要面子", "防御发言"],
+        poster: "./new_images/zui.png",
+        short: "你不是不懂退一步，你只是先想把姿势摆稳。"
+      },
+      RUAN: {
+        code: "RUAN",
+        name: "心软天使",
+        tagline: "别人一求你，拒绝系统就开始报错。",
+        desc: "你会共情，也会心疼，很多别人一句“拜托啦”就足够让你心里发软。你不是没边界，只是太容易站到对方的处境里想问题。温柔是你最稳定的底色，但偶尔也会因为太温柔，忘了先照顾自己。",
+        keywords: ["共情过量", "拒绝困难", "先替别人想"],
+        poster: "./new_images/ruan.png",
+        short: "你经常是那个把“算了我来吧”咽下去的人。"
+      },
+      HUA: {
+        code: "HUA",
+        name: "话痨碎嘴",
+        tagline: "有梗想说，有事想讲，有感想就想立刻分享。",
+        desc: "你的生活参与感很强，而表达就是你参与的方式。看到什么、想到什么、吐槽什么，都容易第一时间说出来。你不是故意吵，只是脑子里的弹幕太多，不发出去就容易堵车。",
+        keywords: ["分享欲强", "嘴巴停不下", "信息播报员"],
+        poster: "./new_images/hua.png",
+        short: "你把很多情绪，都处理成了出口。"
+      },
+      FO: {
+        code: "FO",
+        name: "佛系躺平",
+        tagline: "不争不抢不较劲，很多事到你这里自动变轻。",
+        desc: "你自带一种把事情往轻处放的缓冲层，不太愿意跟人跟事狠狠干到底。很多别人会激动、较真、上头的地方，到你这里只剩一句“算了，也行”。不是没经历过烦，而是你越来越清楚，松开一点其实也能过。",
+        keywords: ["自动降噪", "松弛一点", "随缘处理"],
+        poster: "./new_images/fo.png",
+        short: "你不一定消极，你只是懒得把很多事搞重。"
+      },
+      GUA: {
+        code: "GUA",
+        name: "吃瓜选手",
+        tagline: "不一定参与，但一定在线。",
+        desc: "你的兴趣不一定在成为主角，而在于看清楚剧情怎么发展。八卦、细节、风向、气味，别人略过的地方你能停下来多看两秒。你不见得爱掺和，但你一定爱了解，最好还能顺手补齐前情提要和人物关系图。",
+        keywords: ["前排观众", "信息搜集", "理性围观"],
+        poster: "./new_images/gua.png",
+        short: "台上未必有你，第一排肯定有你。"
+      },
+      DJB: {
+        code: "DJB",
+        name: "顶级标兵",
+        tagline: "省钱不是习惯，是一套完整作战体系。",
+        desc: "你把所有和钱、消费、占便宜有关的题都稳稳地拐到了最省那条路上，说明节流对你来说已经不是临时选择，而是深入骨髓的自动反应。你不是普通省，你是连空气里的优惠券味道都闻得到；不是偶尔算账，而是消费前脑子里会自动开一场预算听证会。",
+        keywords: ["节流封神", "满减直觉", "一分掰两半"],
+        poster: "./new_images/djb.png",
+        short: "你和钱包之间，存在某种近乎信仰级的默契。",
+        hidden: true
+      },
+      XJB: {
+        code: "XJB",
+        name: "小机灵鬼",
+        tagline: "人还没社交，尴尬已经先到场。",
+        desc: "你在社交和恋爱相关的题里，几乎一路走到了最别扭、最怂或者最会嘴硬的位置。别人是谈关系，你像在拆雷；别人怕冷场，你怕自己变成笑场素材，于是能躲先躲，能装镇定就先装镇定，最后再偷偷回去复盘整晚。",
+        keywords: ["尴尬预判", "撤退速度", "嘴硬防身"],
+        poster: "./new_images/xjb.png",
+        short: "你不是没想法，你只是先想好了怎么撤。",
+        hidden: true
+      }
     };
-    const questions = [
+
+    const NORMAL_TYPE_CODES = [
+      "MOYU", "BAIL", "SHE", "NIU", "CHI", "CUN", "LOVE", "DU",
+      "HAHA", "EMO", "JUAN", "ZUI", "RUAN", "HUA", "FO", "GUA"
+    ];
+
+    const QUESTIONS = [
       {
-        id: 'q1', dim: 'S1',
-        text: '我不仅是屌丝，我还是joker,我还是咸鱼，这辈子没谈过一场恋爱，胆怯又自卑，我的青春就是一场又一场的意淫，每一天幻想着我也能有一个女孩子和我一起压马路，一起逛街，一起玩，现实却是爆了父母金币，读了个烂学校，混日子之后找班上，没有理想，没有目标，没有能力的三无人员，每次看到你能在网上开屌丝的玩笑，我都想哭，我就是地底下的老鼠，透过下水井的缝隙，窥探地上的各种美好，每一次看到这种都是对我心灵的一次伤害，对我生存空间的一次压缩，求求哥们给我们这种小丑一点活路吧，我真的不想在白天把枕巾哭湿一大片',
+        id: "q01",
+        section: "work",
+        prompt: "周一早晨闹钟响了，你的第一反应是？",
         options: [
-          { label: '我哭了。。', value: 1 },
-          { label: '这是什么。。', value: 2 },
-          { label: '这不是我！', value: 3 }
+          { key: "A", text: "秒关闹钟继续睡，迟到就迟到，天塌不了", type: "BAIL" },
+          { key: "B", text: "边骂边起，但偷偷计划中午摸鱼两小时", type: "MOYU" },
+          { key: "C", text: "瞬间清醒，今天要比老板来得更早", type: "JUAN" }
         ]
       },
       {
-        id: 'q2', dim: 'S1',
-        text: '我不够好，周围的人都比我优秀',
+        id: "q02",
+        section: "work",
+        prompt: "领导在群里 @ 你问进度，你会？",
         options: [
-          { label: '确实', value: 1 },
-          { label: '有时', value: 2 },
-          { label: '不是', value: 3 }
+          { key: "A", text: "假装没看见，半小时后回“刚在开会”", type: "MOYU" },
+          { key: "B", text: "秒回“马上好”，实际上还没开始", type: "ZUI" },
+          { key: "C", text: "直接发个已完成的文件，顺便反问“还有别的吗”", type: "JUAN" }
         ]
       },
       {
-        id: 'q3', dim: 'S2',
-        text: '我很清楚真正的自己是什么样的',
+        id: "q03",
+        section: "work",
+        prompt: "同事找你帮忙做他的活，你心里不想，嘴上会？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "“行吧……就这一次”", type: "RUAN" },
+          { key: "B", text: "“我也不会诶”（其实会）", type: "SHE" },
+          { key: "C", text: "“可以啊，收费 500 / 小时”", type: "CUN", flags: ["djb"] }
         ]
       },
       {
-        id: 'q4', dim: 'S2',
-        text: '我内心有真正追求的东西',
+        id: "q04",
+        section: "work",
+        prompt: "看到别人在朋友圈晒加班，你会？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "点个赞，心里想：演得不错", type: "GUA" },
+          { key: "B", text: "赶紧也拍张空无一人的办公室发朋友圈", type: "JUAN" },
+          { key: "C", text: "直接划走，跟我有什么关系", type: "FO" }
         ]
       },
       {
-        id: 'q5', dim: 'S3',
-        text: '我一定要不断往上爬、变得更厉害',
+        id: "q05",
+        section: "work",
+        prompt: "项目汇报前五分钟，你在做什么？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "厕所里背稿子，紧张到发抖", type: "EMO" },
+          { key: "B", text: "和同事聊昨晚的八卦，完全不慌", type: "NIU" },
+          { key: "C", text: "最后改一遍 PPT，把字号调大两号", type: "JUAN" }
         ]
       },
       {
-        id: 'q6', dim: 'S3',
-        text: '外人的评价对我来说无所吊谓。',
+        id: "q06",
+        section: "work",
+        prompt: "老板画了个大饼，你内心 OS 是？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "“又来了，这次能换成真饼吗”", type: "BAIL" },
+          { key: "B", text: "“好激动！我要努力吃上！”", type: "LOVE" },
+          { key: "C", text: "“嗯嗯嗯，你说得对，我听着”", type: "FO" }
         ]
       },
       {
-        id: 'q7', dim: 'E1',
-        text: '对象超过5小时没回消息，说自己窜稀了，你会怎么想？',
+        id: "q07",
+        section: "work",
+        prompt: "下班前一分钟突然来了急活，你会？",
         options: [
-          { label: '拉稀不可能5小时，也许ta隐瞒了我。', value: 1 },
-          { label: '在信任和怀疑之间摇摆。', value: 2 },
-          { label: '也许今天ta真的不太舒服。', value: 3 }
+          { key: "A", text: "直接关机走人，明天再说", type: "DU" },
+          { key: "B", text: "边干边骂，但做完才走", type: "HUA" },
+          { key: "C", text: "转手发给实习生：“来，锻炼一下”", type: "MOYU" }
         ]
       },
       {
-        id: 'q8', dim: 'E1',
-        text: '我在感情里经常担心被对方抛弃',
+        id: "q08",
+        section: "work",
+        prompt: "你工位上最显眼的东西是？",
         options: [
-          { label: '是的', value: 1 },
-          { label: '偶尔', value: 2 },
-          { label: '不是', value: 3 }
+          { key: "A", text: "养生壶 + 零食山", type: "CHI" },
+          { key: "B", text: "绿植 + 佛像摆件", type: "FO" },
+          { key: "C", text: "效率手册 + 番茄钟", type: "JUAN" }
         ]
       },
       {
-        id: 'q9', dim: 'E2',
-        text: '我对天发誓，我对待每一份感情都是认真的！',
+        id: "q09",
+        section: "work",
+        prompt: "团建聚餐选餐厅，你第一个发言？",
         options: [
-          { label: '并没有', value: 1 },
-          { label: '也许？', value: 2 },
-          { label: '是的！（问心无愧骄傲脸）', value: 3 }
+          { key: "A", text: "“随便，我都行”", type: "RUAN" },
+          { key: "B", text: "“那家新开的火锅！我馋一周了！”", type: "CHI" },
+          { key: "C", text: "“有没有团购券？人均超过 80 不去”", type: "CUN", flags: ["djb"] }
         ]
       },
       {
-        id: 'q10', dim: 'E2',
-        text: '你的恋爱对象是一个尊老爱幼，温柔敦厚，洁身自好，光明磊落，大义凛然，能言善辩，口才流利，观察入微，见多识广，博学多才，诲人不倦，和蔼可亲，平易近人，心地善良，慈眉善目，积极进取，意气风发，玉树临风，国色天香，倾国倾城，花容月貌的人，此时你会？',
+        id: "q10",
+        section: "work",
+        prompt: "同事升职了，你真实想法是？",
         options: [
-          { label: '就算ta再优秀我也不会陷入太深。', value: 1 },
-          { label: '会介于A和C之间。', value: 2 },
-          { label: '会非常珍惜ta，也许会变成恋爱脑。', value: 3 }
+          { key: "A", text: "“他确实挺拼的，但我不羡慕”", type: "BAIL" },
+          { key: "B", text: "“凭什么？我比他差哪了？”（晚上偷偷改简历）", type: "JUAN" },
+          { key: "C", text: "“恭喜恭喜！今晚请客吗？”", type: "GUA" }
         ]
       },
       {
-        id: 'q11', dim: 'E3',
-        text: '恋爱后，对象非常黏人，你作何感想？',
+        id: "q11",
+        section: "life",
+        prompt: "周末中午 12 点，你刚醒，外卖点啥？",
         options: [
-          { label: '那很爽了', value: 1 },
-          { label: '都行无所谓', value: 2 },
-          { label: '我更喜欢保留独立空间', value: 3 }
+          { key: "A", text: "凑满减凑了 20 分钟，最后点了最便宜的那家", type: "CUN", flags: ["djb"] },
+          { key: "B", text: "直接点三个菜，因为“我都想吃”", type: "CHI" },
+          { key: "C", text: "算了，继续睡，饿到下午再说", type: "BAIL" }
         ]
       },
       {
-        id: 'q12', dim: 'E3',
-        text: '我在任何关系里都很重视个人空间',
+        id: "q12",
+        section: "life",
+        prompt: "看到“第二杯半价”，你会？",
         options: [
-          { label: '我更喜欢依赖与被依赖', value: 1 },
-          { label: '看情况', value: 2 },
-          { label: '是的！（斩钉截铁地说道）', value: 3 }
+          { key: "A", text: "买两杯自己喝，赚到了", type: "CHI" },
+          { key: "B", text: "四处张望有没有人能拼单", type: "CUN", flags: ["djb"] },
+          { key: "C", text: "不买，一个人喝不完，默默走开", type: "DU" }
         ]
       },
       {
-        id: 'q13', dim: 'A1',
-        text: '大多数人是善良的',
+        id: "q13",
+        section: "life",
+        prompt: "你妈给你发养生文章，你会？",
         options: [
-          { label: '其实邪恶的人心比世界上的痔疮更多。', value: 1 },
-          { label: '也许吧。', value: 2 },
-          { label: '是的，我愿相信好人更多。', value: 3 }
+          { key: "A", text: "回一个“收到”，然后扔进收藏夹吃灰", type: "FO" },
+          { key: "B", text: "转发到家族群并配文“大家看看”", type: "HUA" },
+          { key: "C", text: "深夜三点看哭了，觉得自己不孝", type: "EMO" }
         ]
       },
       {
-        id: 'q14', dim: 'A1',
-        text: '你走在街上，一位萌萌的小女孩蹦蹦跳跳地朝你走来（正脸、侧脸看都萌，用vivo、苹果、华为、OPPO手机看都萌，实在是非常萌的那种），她递给你一根棒棒糖，此时你作何感想？',
+        id: "q14",
+        section: "life",
+        prompt: "你的手机相册最新一张是？",
         options: [
-          { label: '呜呜她真好真可爱！居然给我棒棒糖！', value: 3 },
-          { label: '一脸懵逼，作挠头状', value: 2 },
-          { label: '这也许是一种新型诈骗？还是走开为好。', value: 1 }
+          { key: "A", text: "好吃的，刚拍的", type: "CHI" },
+          { key: "B", text: "搞笑表情包，准备发群", type: "HAHA" },
+          { key: "C", text: "天空 / 路灯 / 窗户，配文“好美”", type: "EMO" }
         ]
       },
       {
-        id: 'q15', dim: 'A2',
-        text: '快考试了，学校规定必须上晚自习，请假会扣分，但今晚你约了女/男神一起玩《绝地求生：刺激战场》（一款刺激的游戏），你怎么办？',
+        id: "q15",
+        section: "life",
+        prompt: "一个人在家，你会？",
         options: [
-          { label: '翘了！反正就一次！', value: 1 },
-          { label: '干脆请个假吧。', value: 2 },
-          { label: '都快考试了还去啥。', value: 3 }
+          { key: "A", text: "外放土味神曲，跟着扭", type: "HAHA" },
+          { key: "B", text: "边看吃播边啃黄瓜，假装在吃大餐", type: "CUN", flags: ["djb"] },
+          { key: "C", text: "发呆两小时，思考人生意义", type: "DU" }
         ]
       },
       {
-        id: 'q16', dim: 'A2',
-        text: '我喜欢打破常规，不喜欢被束缚',
+        id: "q16",
+        section: "life",
+        prompt: "朋友突然约你今晚聚会，你？",
         options: [
-          { label: '认同', value: 1 },
-          { label: '保持中立', value: 2 },
-          { label: '不认同', value: 3 }
+          { key: "A", text: "“好啊！去哪？几点？要带酒吗？”", type: "NIU" },
+          { key: "B", text: "“……能改明天吗？我今天没洗头”", type: "SHE", flags: ["xjb"] },
+          { key: "C", text: "“行，但 11 点前我得回家”", type: "DU" }
         ]
       },
       {
-        id: 'q17', dim: 'A3',
-        text: '我做事通常有目标。',
+        id: "q17",
+        section: "life",
+        prompt: "刷到前同事的旅行美照，你会？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "放大找她有没有 P 图痕迹", type: "GUA" },
+          { key: "B", text: "点赞，然后打开机票 App 看了眼价格", type: "MOYU" },
+          { key: "C", text: "“真好啊，我什么时候也能去”（然后继续躺着）", type: "EMO" }
         ]
       },
       {
-        id: 'q18', dim: 'A3',
-        text: '突然某一天，我意识到人生哪有什么他妈的狗屁意义，人不过是和动物一样被各种欲望支配着，纯纯是被激素控制的东西，饿了就吃，困了就睡，一发情就想交配，我们简直和猪狗一样没什么区别。',
+        id: "q18",
+        section: "life",
+        prompt: "你的微信未读消息数量是？",
         options: [
-          { label: '是这样的。', value: 1 },
-          { label: '也许是，也许不是。', value: 2 },
-          { label: '这简直是胡扯', value: 3 }
+          { key: "A", text: "0，有红点就难受", type: "JUAN" },
+          { key: "B", text: "99+，懒得点开", type: "BAIL" },
+          { key: "C", text: "几十条，但全是群聊，不想看", type: "DU" }
         ]
       },
       {
-        id: 'q19', dim: 'Ac1',
-        text: '我做事主要为了取得成果和进步，而不是避免麻烦和风险。',
+        id: "q19",
+        section: "life",
+        prompt: "你的支付宝年度账单出来那天，你？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "截图发朋友圈：“我是谁我在哪”", type: "HAHA" },
+          { key: "B", text: "默默算哪笔不该花，然后失眠", type: "CUN", flags: ["djb"] },
+          { key: "C", text: "不看，只要我不看就没花钱", type: "FO" }
         ]
       },
       {
-        id: 'q20', dim: 'Ac1',
-        text: '你因便秘坐在马桶上（已长达30分钟），拉不出很难受。此时你更像',
+        id: "q20",
+        section: "life",
+        prompt: "你晚上睡不着，原因是？",
         options: [
-          { label: '再坐三十分钟看看，说不定就有了。', value: 1 },
-          { label: '用力拍打自己的屁股并说：“死屁股，快拉啊！”', value: 2 },
-          { label: '使用开塞露，快点拉出来才好。', value: 3 }
+          { key: "A", text: "刚看完一部虐剧，还在哭", type: "EMO" },
+          { key: "B", text: "复盘今天哪句话说错了，越想越清醒", type: "SHE" },
+          { key: "C", text: "饿了，在纠结要不要点烧烤", type: "CHI" }
         ]
       },
       {
-        id: 'q21', dim: 'Ac2',
-        text: '我做决定比较果断，不喜欢犹豫',
+        id: "q21",
+        section: "love",
+        prompt: "你喜欢的人发了条朋友圈，你会？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "秒赞，但评论想了十分钟又删了", type: "SHE", flags: ["xjb"] },
+          { key: "B", text: "私聊问他“你刚发的那个餐厅好吃吗？”", type: "LOVE" },
+          { key: "C", text: "截图发给闺蜜：“他是不是有对象了？”", type: "GUA" }
         ]
       },
       {
-        id: 'q22', dim: 'Ac2',
-        text: '此题没有题目，请盲选',
+        id: "q22",
+        section: "love",
+        prompt: "朋友失恋找你哭诉，你会？",
         options: [
-          { label: '反复思考后感觉应该选A？', value: 1 },
-          { label: '啊，要不选B？', value: 2 },
-          { label: '不会就选C？', value: 3 }
+          { key: "A", text: "“别哭了，走，吃顿火锅就好了！”", type: "CHI" },
+          { key: "B", text: "“我早就说 ta 不行……”说半小时", type: "ZUI", flags: ["xjb"] },
+          { key: "C", text: "安静听着，递纸巾，啥也不说", type: "RUAN" }
         ]
       },
       {
-        id: 'q23', dim: 'Ac3',
-        text: '别人说你“执行力强”，你内心更接近哪句？',
+        id: "q23",
+        section: "love",
+        prompt: "你在街上看到情侣吵架，你会？",
         options: [
-          { label: '我被逼到最后确实执行力超强。。。', value: 1 },
-          { label: '啊，有时候吧。', value: 2 },
-          { label: '是的，事情本来就该被推进', value: 3 }
+          { key: "A", text: "放慢脚步，耳朵竖起来听", type: "GUA" },
+          { key: "B", text: "绕路走，怕被殃及", type: "SHE", flags: ["xjb"] },
+          { key: "C", text: "心里想：“还好我单身”", type: "DU" }
         ]
       },
       {
-        id: 'q24', dim: 'Ac3',
-        text: '我做事常常有计划，____',
+        id: "q24",
+        section: "love",
+        prompt: "你给对象发消息，一小时没回，你会？",
         options: [
-          { label: '然而计划不如变化快。', value: 1 },
-          { label: '有时能完成，有时不能。', value: 2 },
-          { label: '我讨厌被打破计划。', value: 3 }
+          { key: "A", text: "再发 20 条：“在吗？”“忙啥？”“是不是生气了？”", type: "LOVE" },
+          { key: "B", text: "无所谓，先打两把游戏", type: "BAIL" },
+          { key: "C", text: "打开 ta 的微博 / 抖音 / 网易云查动态", type: "GUA", flags: ["xjb"] }
         ]
       },
       {
-        id: 'q25', dim: 'So1',
-        text: '你因玩《第五人格》（一款刺激的游戏）而结识许多网友，并被邀请线下见面，你的想法是？',
+        id: "q25",
+        section: "love",
+        prompt: "第一次约会，对方问你想吃什么，你？",
         options: [
-          { label: '网上口嗨下就算了，真见面还是有点忐忑。', value: 1 },
-          { label: '见网友也挺好，反正谁来聊我就聊两句。', value: 2 },
-          { label: '我会打扮一番并热情聊天，万一呢，我是说万一呢？', value: 3 }
+          { key: "A", text: "“你定就好，我不挑”", type: "RUAN", flags: ["xjb"] },
+          { key: "B", text: "“那家新开的烤肉！我攻略都做好了！”", type: "CHI" },
+          { key: "C", text: "“便宜点的吧，别浪费”", type: "CUN", flags: ["djb"] }
         ]
       },
       {
-        id: 'q26', dim: 'So1',
-        text: '朋友带了ta的朋友一起来玩，你最可能的状态是',
+        id: "q26",
+        section: "love",
+        prompt: "看到“情侣必做的 100 件小事”清单，你？",
         options: [
-          { label: '对“朋友的朋友”天然有点距离感，怕影响二人关系', value: 1 },
-          { label: '看对方，能玩就玩。', value: 2 },
-          { label: '朋友的朋友应该也算我的朋友！要热情聊天', value: 3 }
+          { key: "A", text: "收藏，并幻想以后和对象一起做", type: "LOVE" },
+          { key: "B", text: "划过去：“一个人做也挺好”", type: "DU" },
+          { key: "C", text: "截图发朋友：“笑死，我们一件都没做过”", type: "HAHA", flags: ["xjb"] }
         ]
       },
       {
-        id: 'q27', dim: 'So2',
-        text: '我和人相处主打一个电子围栏，靠太近会自动报警。',
+        id: "q27",
+        section: "love",
+        prompt: "朋友给你介绍对象，你第一反应是？",
         options: [
-          { label: '认同', value: 3 },
-          { label: '中立', value: 2 },
-          { label: '不认同', value: 1 }
+          { key: "A", text: "“有照片吗？先看看”", type: "GUA" },
+          { key: "B", text: "“不了不了，我一个人挺好”", type: "DU", flags: ["xjb"] },
+          { key: "C", text: "“好呀好呀！什么时候见？”", type: "LOVE" }
         ]
       },
       {
-        id: 'q28', dim: 'So2',
-        text: '我渴望和我信任的人关系密切，熟得像失散多年的亲戚。',
+        id: "q28",
+        section: "love",
+        prompt: "你对象说“我们冷静一下”，你会？",
         options: [
-          { label: '认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '不认同', value: 3 }
+          { key: "A", text: "“好的，你冷静完告诉我” （然后三天不联系）", type: "ZUI", flags: ["xjb"] },
+          { key: "B", text: "疯狂道歉，买礼物，求不要冷静", type: "RUAN" },
+          { key: "C", text: "深夜发伤感文案，仅 ta 可见", type: "EMO" }
         ]
       },
       {
-        id: 'q29', dim: 'So3',
-        text: '有时候你明明对一件事有不同的、负面的看法，但最后没说出来。多数情况下原因是：',
+        id: "q29",
+        section: "love",
+        prompt: "你和朋友打赌输了，惩罚是给前任发消息，你？",
         options: [
-          { label: '这种情况较少。', value: 1 },
-          { label: '可能碍于情面或者关系。', value: 2 },
-          { label: '不想让别人知道自己是个阴暗的人。', value: 3 }
+          { key: "A", text: "直接发“在吗”，然后后悔一晚上", type: "SHE", flags: ["xjb"] },
+          { key: "B", text: "“我选喝酒，不选这个”", type: "ZUI" },
+          { key: "C", text: "发完立刻删好友，假装没发生过", type: "BAIL" }
         ]
       },
       {
-        id: 'q30', dim: 'So3',
-        text: '我在不同人面前会表现出不一样的自己',
+        id: "q30",
+        section: "love",
+        prompt: "你认为恋爱中最幸福的时刻是？",
         options: [
-          { label: '不认同', value: 1 },
-          { label: '中立', value: 2 },
-          { label: '认同', value: 3 }
+          { key: "A", text: "一起吃夜宵，他把他碗里的肉夹给你", type: "CHI" },
+          { key: "B", text: "半夜打电话，聊到手机没电", type: "LOVE" },
+          { key: "C", text: "吵架后他先低头说“我错了”", type: "ZUI", flags: ["xjb"] }
         ]
       }
     ];
-    const specialQuestions = [
-      {
-        id: 'drink_gate_q1',
-        special: true,
-        kind: 'drink_gate',
-        text: '您平时有什么爱好？',
-        options: [
-          { label: '吃喝拉撒', value: 1 },
-          { label: '艺术爱好', value: 2 },
-          { label: '饮酒', value: 3 },
-          { label: '健身', value: 4 }
-        ]
-      },
-      {
-        id: 'drink_gate_q2',
-        special: true,
-        kind: 'drink_trigger',
-        text: '您对饮酒的态度是？',
-        options: [
-          { label: '小酌怡情，喝不了太多。', value: 1 },
-          { label: '我习惯将白酒灌在保温杯，当白开水喝，酒精令我信服。', value: 2 }
-        ]
-      }
-    ];
-
-    const TYPE_LIBRARY = {
-  "CTRL": {
-    "code": "CTRL",
-    "cn": "拿捏者",
-    "intro": "怎么样，被我拿捏了吧？",
-    "desc": "恭喜您，您测出了全中国最为罕见的人格，您是宇宙熵增定律的天然反抗者！全世界所谓成功人士里，99.99%都是您的拙劣模仿者。CTRL人格，是行走的人形自走任务管理器，普通人眼中的“规则”，在您这里只是出厂的基础参数设置；凡人所谓的“计划”，对您而言不过是心血来潮的随手涂鸦。拥有一个CTRL朋友意味着什么？意味着你的人生导航系统会变得更加精准、高效。因为CTRL最会拿捏了。CTRL会在你人生列车即将脱轨的前一秒，用一个“Ctrl+S”帮你硬核存档，再用一套无法拒绝的逻辑把你强行拽回正轨。他们是你混乱生活最后的备份盘，是宇宙崩塌前唯一还亮着的那个重启键。"
-  },
-  "ATM-er": {
-    "code": "ATM-er",
-    "cn": "送钱者",
-    "intro": "你以为我很有钱吗？",
-    "desc": "恭喜您，您竟然测出了这个世界上最稀有的人格。您或将成为金融界的未解之谜——是的，ATM-er不一定真的“送钱”，但可能永远在“支付”。支付时间、支付精力、支付耐心、支付一个本该安宁的夜晚。因此像一部老旧但坚固的ATM机，插进去的是别人的焦虑和麻烦，吐出来的是“没事，有我”的安心保证。您的人生就是一场盛大的、无人喝彩的单人付账秀。您竟用磐石般的可靠，承受了瀑布般的索取，偶尔夜深人静才会对着账单——可能是精神上的——发出一声叹息：我这该死的、无处安放的责任心啊。"
-  },
-  "Dior-s": {
-    "code": "Dior-s",
-    "cn": "屌丝",
-    "intro": "等着我屌丝逆袭。",
-    "desc": "恭喜！您并非屌丝，您是犬儒主义先贤第欧根尼失散多年的精神传人，因为屌丝的全称是 Diogenes' Original Realist - sage。Dior-s人格，是对当代消费主义陷阱和成功学PUA最彻底的蔑视。他们不是“不求上进”，而是早已看穿一切“上进”的尽头不过是更高级的牢房。屌丝有着大智慧。当别人在追逐风口，被时代的巨浪拍得七荤八素时，Dior-s早已在自己的精神木桶里晒着太阳，达到了“人桶合一”的至高境界。他们信奉的不是空话，是经过亿万次实践检验的物理法则与生物本能：一、躺着比站着舒服；二、饭点到了就得干饭。"
-  },
-  "BOSS": {
-    "code": "BOSS",
-    "cn": "领导者",
-    "intro": "方向盘给我，我来开。",
-    "desc": "BOSS是一个手里永远拿着方向盘的人。哪怕油箱已经亮了红灯，哪怕导航在胡说八道，你都会面无表情地说一句：我来开。然后真的把车开到了目的地。该人格拥有独立的物理法则——永恒向上定律。BOSS人格看世界，就像玩通关了的玩家在看新手教程。效率是他们的信仰，秩序是他们的呼吸。他们不是“自带领袖气场”，他们本身就是人形的气场发生器，方圆五米内，空气都会自动变得严肃而高效。他们眼中的“自我突破”，约等于普通人眼中的“自虐”。今天掌握一门新语言，明天考下一个专业证书，后天就计划殖民火星。你说这太卷了，他会用一种看弱鸡的眼神看着你：不是我太狠，是你太松。"
-  },
-  "THAN-K": {
-    "code": "THAN-K",
-    "cn": "感恩者",
-    "intro": "我感谢苍天！我感谢大地！",
-    "desc": "恭喜您，您测出了全中国最为罕见的人格。您应当感谢我！感谢您在此刻拥有了生命的滋润！倘若您上班路上堵车了？您也应当说一句：我感谢这次堵车，它让我有更多时间聆听这首美妙的歌曲，并欣赏窗外每一张因焦虑而扭曲的脸庞，让我更珍惜内心的平静。是的，THAN-K拥有温润如玉的性格和海纳百川的胸怀。他们眼中的世界没有完全的坏人，只有“尚未被感恩光芒照耀到的朋友”。拥有一个THAN-K朋友，就像身边多了一个永不枯竭的正能量发射塔。TA甚至能帮你从墙角的霉斑里发现一幅梵高风格的星空图。"
-  },
-  "OH-NO": {
-    "code": "OH-NO",
-    "cn": "哦不人",
-    "intro": "哦不！我怎么会是这个人格？！",
-    "desc": "“哦不！”并非恐惧的尖叫，而是一种顶级的智慧。当普通人看到一个杯子放在桌沿，哦不人看到的是一场由“水渍-短路-火灾-全楼疏散-经济损失-蝴蝶效应-世界末日”构成的灾难史诗。于是，伴随着一声发自灵魂深处的 Oh, no!，他们会以迅雷不及掩耳之势把杯子挪到桌子正中央，然后再垫上一张吸水杯垫。哦不人对“边界”有一种近乎偏执的尊重：你的就是你的，我的就是我的。所有意外和风险都已经在他的“Oh, no!”声中，被扼杀在了萌芽状态。他们是秩序的守护神，是混乱世界里最后那批神经绷得很直的体面人。"
-  },
-  "GOGO": {
-    "code": "GOGO",
-    "cn": "行者",
-    "intro": "gogogo~出发咯",
-    "desc": "经研究发现，GOGO人格的大脑构造与常人有根本性不同。GOGO活在一个极致的“所见即所得”世界里，人生信条简单粗暴到令人发指：只要我闭上眼睛，天就是黑的；只要我把钱都花了，我就没有钱了；只要我站在斑马线上，我现在就是行人了。逻辑完美闭环，根本无法反驳。别人还在为“先有鸡还是先有蛋”而辩论，GOGO行者已经把鸡和蛋一起做成了一盘“鸡生蛋，蛋生鸡之终极奥义盖浇饭”。他们不是在“解决问题”，他们是在“清除待办事项”。对他们来说，世界上只有两种状态：已完成，和即将被我完成。"
-  },
-  "SEXY": {
-    "code": "SEXY",
-    "cn": "尤物",
-    "intro": "您就是天生的尤物！",
-    "desc": "当您走进一个房间，照明系统会自动将您识别为天生的尤物，并自觉调暗亮度，以避免能源浪费。当您微笑时，您就变成了微笑着的尤物，周围的空气湿度也会显著下降，因为水蒸气都凝结成了人眼中的爱心。无论是谁，都容易对您的存在产生一种超标的注意力。传说，如果有足够多的SEXY人格聚集在一起开派对，其释放出的综合魅力能量足以暂时扭曲时空结构，让参加者产生“时间变慢了”的幸福错觉。他们不需要卖力表达，很多时候，单是存在本身就已经很像一篇华丽到过分的赋。"
-  },
-  "LOVE-R": {
-    "code": "LOVE-R",
-    "cn": "多情者",
-    "intro": "爱意太满，现实显得有点贫瘠。",
-    "desc": "LOVE-R人格像远古神话时代幸存至今的珍稀物种，其存在概率比你在马桶里钓到作者胳膊的概率还低。您简直是这个钢铁森林时代最后的、也是最不合时宜的吟游诗人。因为您的情感处理器不是二进制的，而是彩虹制的。一片落叶，在常人眼里只是“秋天来了”，在LOVE-R眼中，则是一场关于轮回、牺牲与无言之爱的十三幕悲喜剧。您内心世界像一座永不关门的主题公园，一生都在寻找那个能看懂园区地图、并愿意陪你坐旋转木马直到宇宙尽头的灵魂伴侣。"
-  },
-  "MUM": {
-    "code": "MUM",
-    "cn": "妈妈",
-    "intro": "或许...我可以叫你妈妈吗....?",
-    "desc": "恭喜您，您测出了全中国最稀有的妈妈人格。是的，在混沌未开、时间尚无姓名之前，在第一颗恒星打出第一个嗝之前，就已经有了妈妈。妈妈人格的底色是温柔，擅长感知情绪，具有超强共情力，知道什么时候该停下来，什么时候该对自己说一句“算了”。妈妈像一个医生，治愈了别人的不开心。只可惜，当妈妈落泪时，TA给自己的药，剂量总是比给别人小一号。MUM对自己的温柔，常常打了折。"
-  },
-  "FAKE": {
-    "code": "FAKE",
-    "cn": "伪人",
-    "intro": "已经，没有人类了。",
-    "desc": "SCP基金会紧急报告：项目编号 SCP-CN-████ “伪人”。在社交场合，伪人是八面玲珑的存在，因为他们切换人格面具比切换手机输入法还快。上一秒还是推心置腹的铁哥们模式，下一秒领导来了，瞬间切换成沉稳可靠好员工模式，连脸上的光泽度和卷曲度都会发生微调。你以为你交到了一个真心懂你的朋友？醒醒。你只是幸运地遇到了一个善于伪装、高性能的仿生人罢了。夜深人静时，伪人把面具一层层摘下来，最后才发现，面具下空得很，正是这些面具构成了自己。"
-  },
-  "OJBK": {
-    "code": "OJBK",
-    "cn": "无所谓人",
-    "intro": "我说随便，是真的随便。",
-    "desc": "让我们直面这个词的粗犷本质：OJBK。这已经不是一种人格，而是一种统治哲学。当凡人面临“中午吃米饭还是面条”的世纪抉择时，大脑在激烈燃烧卡路里；而OJBK人格，会用一种批阅奏章般的淡然，轻飘飘地吐出两个字：都行。这不是没主见，这是在告诉你：尔等凡俗的选择，于朕而言，皆为蝼蚁。为什么不争执？因为跟草履虫辩论宇宙的未来毫无意义。为什么不较真？因为帝王不会在意脚下的尘埃是往左飘还是往右飘。"
-  },
-  "MALO": {
-    "code": "MALO",
-    "cn": "吗喽",
-    "intro": "人生是个副本，而我只是一只吗喽。",
-    "desc": "朋友，你不是“童心未泯”，你压根就没进化。你的灵魂还停留在那个挂在树上荡秋千、看见香蕉就两眼放光的快乐时代。当人类祖先决定从树上下来、学会直立行走、穿上西装打领带时，吗喽人格的祖先在旁边的大树上看着他们，挠了挠屁股，嘴里发出一声不屑的“吱”。他们看透了一切：所谓的“文明”，不过是一场最无聊、最不好玩的付费游戏。规则偶尔是可以打破的，天花板是用来倒挂的，会议室是用来表演后空翻的。MALO本身就是一个从巨大脑洞里掉出来、忘了关门的奇思妙想。"
-  },
-  "JOKE-R": {
-    "code": "JOKE-R",
-    "cn": "小丑",
-    "intro": "原来我们都是小丑。",
-    "desc": "请注意，JOKE-R人格不是一个“人”，更像一个把笑话穿在身上的小丑。你打开一层，是个笑话；再打开一层，是个段子；你一层层打开，直到最后，你发现最里面……是空的，只剩下一点微弱的回声在说：哈，没想到吧。JOKE-R是社交场合的气氛组组长兼唯一指定火力输出。有他们在，场子就不会冷。所有人前仰后合地笑着，而笑得最开心的，往往也是他们自己——用最大的笑声，盖住心碎的声音。"
-  },
-  "WOC!": {
-    "code": "WOC!",
-    "cn": "握草人",
-    "intro": "卧槽，我怎么是这个人格？",
-    "desc": "我们发现了一种神奇的生物——WOC!人。他们拥有两种完全独立的操作系统：一个叫“表面系统”，负责发出“我操”“牛逼”“啊？”等一系列大惊小怪的拟声词；另一个叫“后台系统”，负责冷静分析：嗯，果然不出我所料。WOC!人只会卧槽，不会多管闲事，因为他们深知，给傻逼讲道理，就像扶着烂泥上墙，不仅浪费体力，还弄自己一手屎。所以他们选择，握着一根智慧的大草，用一声饱含深情的“WOC！”来为这个疯狂的世界献上最高敬意。"
-  },
-  "THIN-K": {
-    "code": "THIN-K",
-    "cn": "思考者",
-    "intro": "已深度思考100s。",
-    "desc": "经研究发现，THIN-K人格的大脑构造与常人有根本性不同。正如名称所示，您的大脑长时间处于思考状态。您十分会审判信息，注重论点、论据、逻辑推理、潜在偏见，乃至“作者本人三代以内思想背景调查报告”的全套材料。在这个信息爆炸的时代，您绝不会轻易盲从，会在关系中衡量利弊，也十分捍卫自己的自我空间。当别人看到您独处时在发呆？愚蠢，那不是发呆，那是您的大脑正在对今天接收到的所有信息进行分类、归档和销毁。"
-  },
-  "SHIT": {
-    "code": "SHIT",
-    "cn": "愤世者",
-    "intro": "这个世界，构石一坨。",
-    "desc": "恭喜您，SHIT人格是宇宙中已知的唯一一种稀有人格。所谓狗屎，并不是在抱怨，而是在进行一种神秘仪式。SHIT的行为模式是一场惊天动地的悖论戏剧。嘴上：这个项目简直是屎。手上：默默打开 Excel，开始建构函数模型和甘特图。嘴上：这帮同事都是 shit。手上：在同事搞砸之后，一边烦着，一边熬夜把烂摊子收拾得明明白白。嘴上：这个世界就是一坨 shit，赶紧毁灭吧。手上：第二天早上七点准时起床，挤上 shit 一样的地铁，去干那份 shit 一样的工作。别怕，那不是世界末日的警报，那是他马上要开始拯救世界的冲锋号。"
-  },
-  "ZZZZ": {
-    "code": "ZZZZ",
-    "cn": "装死者",
-    "intro": "我没死，我只是在睡觉。",
-    "desc": "恭喜您，您测出了全中国最稀有的装死人格。群里99+条消息您可以视而不见，但当有人发出“@全体成员 还有半小时就截止了”的最后通牒时，您也许会像刚从千年古墓里苏醒一样，缓缓地敲出一个“收到”，然后在29分钟内，交出一份虽然及格的答卷。是的，直到“死线”这个唯一的、最高权限的指令出现，您就真正爆发了，不鸣则已，一鸣惊人。您向宇宙证明了一个真理：有时什么都不做，就不会做错。"
-  },
-  "POOR": {
-    "code": "POOR",
-    "cn": "贫困者",
-    "intro": "我穷，但我很专。",
-    "desc": "恭喜您，您测出了【POOR - 贫困者】。这个“贫困”不是钱包余额的判决书，更像一种欲望断舍离后的资源再分配。别人把精力撒成漫天二维码，你把精力压成一束激光，照哪儿，哪儿就开始冒烟。POOR的世界很简单：不重要的东西一律降噪，重要的东西狠狠干到底。热闹、社交、虚荣、到处刷存在感？抱歉，没空。你不是资源少，你是把资源全部灌进了一个坑里，所以看起来像贫困，实际上像矿井。一旦某件事被你认定值得钻，外界再吵也只是背景杂音。"
-  },
-  "MONK": {
-    "code": "MONK",
-    "cn": "僧人",
-    "intro": "没有那种世俗的欲望。",
-    "desc": "当别人在KTV里参悟爱与恨的纠缠，MONK人格选择在家中参悟一份大道。MONK已然看破红尘，不希望闲人来扰其清修、破其道行。MONK的个人空间，是他们的结界，是他们的须弥山，是他们的绝对领域，神圣不可侵犯。踏入者，会感受到一种来自灵魂深处的窒息感。MONK们不黏不缠，因为在他们的世界观里，万物皆有其独立轨道。行星与行星之间保持着亿万公里的距离，才构成和谐宇宙，人与人之间为什么不行？"
-  },
-  "IMSB": {
-    "code": "IMSB",
-    "cn": "傻者",
-    "intro": "认真的么？我真的是傻逼么？",
-    "desc": "恭喜您！您根本不在人类范畴内！您测出了百万年一遇的【IMSB】人格。IMSB人格的大脑里住着两个不死不休的究极战士：一个叫“我他妈冲了！”，另一个叫“我是个傻逼！”。当IMSB面对一个有好感的人时，前者会说：冲啊！去要微信！去约饭！爱要大声说出来！后者接着说：人家凭什么看得上你？你去了就是自取其辱！最终结果：盯着对方背影直到消失，然后掏出手机搜索“如何克服社交恐惧症”。IMSB不是真的傻，只是您的内心戏，可能比漫威宇宙所有电影加起来都长。"
-  },
-  "SOLO": {
-    "code": "SOLO",
-    "cn": "孤儿",
-    "intro": "我哭了，我怎么会是孤儿？",
-    "desc": "恭喜您，您测出了全中国最稀有的【SOLO - 孤儿】人格。别急着哭，国王的加冕仪式，通常都是一个人。孤儿的自我价值感偏低，因此有时主动疏远他人，孤儿们在自己的灵魂外围建起了一座名为“莫挨老子”的万里长城。每一块砖，都是过去的一道伤口。孤儿就像一只把所有软肋都藏起来，然后用最硬的刺对着世界的刺猬。那满身的尖刺不是攻击，那是一句句说不出口的“别过来，我怕你也受伤”和“求求你，别离开”。"
-  },
-  "FUCK": {
-    "code": "FUCK",
-    "cn": "草者",
-    "intro": "操！这是什么人格？",
-    "desc": "恭喜您！您根本不在人类范畴内！您测出了百万年一遇的【FUCK】人格。人类文明城市里，出现了一株无法被任何除草剂杀死的、具有超级生命力的人形野草——那就是草者人格。它的学名，就叫 FUCK。在FUCK的世界观里，世俗规则简直毫无意义，并且FUCK的情绪开关是物理拨片式的：FUCK YEAH 和 FUCK OFF。FUCK追求的不只是当下快感，也在追求一种在体内横冲直撞的生命力。当所有人都被驯化成了温顺家禽，FUCK则是荒野上最后那一声狼嚎。"
-  },
-  "DEAD": {
-    "code": "DEAD",
-    "cn": "死者",
-    "intro": "我，还活着吗？",
-    "desc": "恭喜您，您测出了全中国最为罕见的人格，只是“死者”这个名字实在有点晦气，所以也可以叫：Don't Expect Any Drives。死者已经看透了那些无意义的哲学思考，因此显得对一切“失去”了兴趣。死者们看世界的眼神，就像一位顶级玩家通关了所有主线、支线、隐藏任务，删档重开了999次之后，终于发现：这游戏压根就没意思。死者是超越了欲望和目标的终极贤者。他们的存在，就是对这个喧嚣世界最沉默也最彻底的抗议。"
-  },
-  "IMFW": {
-    "code": "IMFW",
-    "cn": "废物",
-    "intro": "我真的...是废物吗？",
-    "desc": "恭喜您，您测出的不是一个普通人格，您是一种极其珍稀的、仅占世界人口0.0001％的——【废物】。废物们的自尊通常有些脆弱，缺乏安全感，偶尔也会缺乏主见，因此这种人格能精确地感知到周围最强的那个 WiFi 信号——也就是他们心里最可靠的人。走进【废物】人格的生活，就像走进了一个顶级兰花温室：需要精确控制温度、湿度，以及每天定时进行“我爱你”的言语光合作用。给废物一颗糖，他们会还你一个完全信任你、亮晶晶的眼神。你未必是废物，你只是太没防备，太容易认真。"
-  },
-  "HHHH": {
-    "code": "HHHH",
-    "cn": "傻乐者",
-    "intro": "哈哈哈哈哈哈。",
-    "desc": "恭喜您！由于您的思维回路过于清奇，标准人格库已全面崩溃。第一人格匹配率只有60％以下时，系统才会为您强制匹配这个人格——【HHHH - 傻乐者】。这个人格有什么特质？哈哈哈哈哈哈哈哈哈哈哈哈！对不起，这就是全部的特质了。您可以查看十五维度进行不专业的评估，实在是抱歉！作者设置人格时没有考虑全面，因此才会出现这样的状况。哈哈哈哈哈哈……笑着笑着，我便哭了出来。怎么会有人的脑回路这么新奇。"
-  },
-  "DRUNK": {
-    "code": "DRUNK",
-    "cn": "酒鬼",
-    "intro": "烈酒烧喉，不得不醉。",
-    "desc": "您为什么走路摇摇晃晃？您为什么总是情绪高涨？您为什么看东西是重影的？因为您体内流淌的不是血液，是美味的五粮液！是国窖1573！是江小白！是陕西五粮液！哦，美味的白酒，每一滴都在燃烧，都在沸腾。您是否已经习惯了将白酒灌入保温杯，当作白开水一饮而下？多么伟大的白酒！它让您在饭桌上谈笑风生，在厕所里抱着马桶忏悔人生；它让您觉得自己是夜场诗人，是宇宙中心那团不灭的火，直到第二天上午十点，您的头像裂开的核桃，嘴角挂着食物残渣，灵魂缩在角落里。您终于明白，昨晚那个高谈阔论、拍桌怒吼的人，已经成为了一个酒鬼。"
-  }
-};
-    const TYPE_IMAGES = {
-  "IMSB": "./image/IMSB.png",
-  "BOSS": "./image/BOSS.png",
-  "MUM": "./image/MUM.png",
-  "FAKE": "./image/FAKE.png",
-  "Dior-s": "./image/Dior-s.jpg",
-  "DEAD": "./image/DEAD.png",
-  "ZZZZ": "./image/ZZZZ.png",
-  "GOGO": "./image/GOGO.png",
-  "FUCK": "./image/FUCK.png",
-  "CTRL": "./image/CTRL.png",
-  "HHHH": "./image/HHHH.png",
-  "SEXY": "./image/SEXY.png",
-  "OJBK": "./image/OJBK.png",
-  "JOKE-R": "./image/JOKE-R.jpg",
-  "POOR": "./image/POOR.png",
-  "OH-NO": "./image/OH-NO.png",
-  "MONK": "./image/MONK.png",
-  "SHIT": "./image/SHIT.png",
-  "THAN-K": "./image/THAN-K.png",
-  "MALO": "./image/MALO.png",
-  "ATM-er": "./image/ATM-er.png",
-  "THIN-K": "./image/THIN-K.png",
-  "SOLO": "./image/SOLO.png",
-  "LOVE-R": "./image/LOVE-R.png",
-  "WOC!": "./image/WOC.png",
-  "DRUNK": "./image/DRUNK.png",
-  "IMFW": "./image/IMFW.png"
-};
-
-    const NORMAL_TYPES = [
-  {
-    "code": "CTRL",
-    "pattern": "HHH-HMH-MHH-HHH-MHM"
-  },
-  {
-    "code": "ATM-er",
-    "pattern": "HHH-HHM-HHH-HMH-MHL"
-  },
-  {
-    "code": "Dior-s",
-    "pattern": "MHM-MMH-MHM-HMH-LHL"
-  },
-  {
-    "code": "BOSS",
-    "pattern": "HHH-HMH-MMH-HHH-LHL"
-  },
-  {
-    "code": "THAN-K",
-    "pattern": "MHM-HMM-HHM-MMH-MHL"
-  },
-  {
-    "code": "OH-NO",
-    "pattern": "HHL-LMH-LHH-HHM-LHL"
-  },
-  {
-    "code": "GOGO",
-    "pattern": "HHM-HMH-MMH-HHH-MHM"
-  },
-  {
-    "code": "SEXY",
-    "pattern": "HMH-HHL-HMM-HMM-HLH"
-  },
-  {
-    "code": "LOVE-R",
-    "pattern": "MLH-LHL-HLH-MLM-MLH"
-  },
-  {
-    "code": "MUM",
-    "pattern": "MMH-MHL-HMM-LMM-HLL"
-  },
-  {
-    "code": "FAKE",
-    "pattern": "HLM-MML-MLM-MLM-HLH"
-  },
-  {
-    "code": "OJBK",
-    "pattern": "MMH-MMM-HML-LMM-MML"
-  },
-  {
-    "code": "MALO",
-    "pattern": "MLH-MHM-MLH-MLH-LMH"
-  },
-  {
-    "code": "JOKE-R",
-    "pattern": "LLH-LHL-LML-LLL-MLM"
-  },
-  {
-    "code": "WOC!",
-    "pattern": "HHL-HMH-MMH-HHM-LHH"
-  },
-  {
-    "code": "THIN-K",
-    "pattern": "HHL-HMH-MLH-MHM-LHH"
-  },
-  {
-    "code": "SHIT",
-    "pattern": "HHL-HLH-LMM-HHM-LHH"
-  },
-  {
-    "code": "ZZZZ",
-    "pattern": "MHL-MLH-LML-MML-LHM"
-  },
-  {
-    "code": "POOR",
-    "pattern": "HHL-MLH-LMH-HHH-LHL"
-  },
-  {
-    "code": "MONK",
-    "pattern": "HHL-LLH-LLM-MML-LHM"
-  },
-  {
-    "code": "IMSB",
-    "pattern": "LLM-LMM-LLL-LLL-MLM"
-  },
-  {
-    "code": "SOLO",
-    "pattern": "LML-LLH-LHL-LML-LHM"
-  },
-  {
-    "code": "FUCK",
-    "pattern": "MLL-LHL-LLM-MLL-HLH"
-  },
-  {
-    "code": "DEAD",
-    "pattern": "LLL-LLM-LML-LLL-LHM"
-  },
-  {
-    "code": "IMFW",
-    "pattern": "LLH-LHL-LML-LLL-MLL"
-  }
-];
-    const DIM_EXPLANATIONS = {
-  "S1": {
-    "L": "对自己下手比别人还狠，夸你两句你都想先验明真伪。",
-    "M": "自信值随天气波动，顺风能飞，逆风先缩。",
-    "H": "心里对自己大致有数，不太会被路人一句话打散。"
-  },
-  "S2": {
-    "L": "内心频道雪花较多，常在“我是谁”里循环缓存。",
-    "M": "平时还能认出自己，偶尔也会被情绪临时换号。",
-    "H": "对自己的脾气、欲望和底线都算门儿清。"
-  },
-  "S3": {
-    "L": "更在意舒服和安全，没必要天天给人生开冲刺模式。",
-    "M": "想上进，也想躺会儿，价值排序经常内部开会。",
-    "H": "很容易被目标、成长或某种重要信念推着往前。"
-  },
-  "E1": {
-    "L": "感情里警报器灵敏，已读不回都能脑补到大结局。",
-    "M": "一半信任，一半试探，感情里常在心里拉锯。",
-    "H": "更愿意相信关系本身，不会被一点风吹草动吓散。"
-  },
-  "E2": {
-    "L": "感情投入偏克制，心门不是没开，是门禁太严。",
-    "M": "会投入，但会给自己留后手，不至于全盘梭哈。",
-    "H": "一旦认定就容易认真，情绪和精力都给得很足。"
-  },
-  "E3": {
-    "L": "容易黏人也容易被黏，关系里的温度感很重要。",
-    "M": "亲密和独立都要一点，属于可调节型依赖。",
-    "H": "空间感很重要，再爱也得留一块属于自己的地。"
-  },
-  "A1": {
-    "L": "看世界自带防御滤镜，先怀疑，再靠近。",
-    "M": "既不天真也不彻底阴谋论，观望是你的本能。",
-    "H": "更愿意相信人性和善意，遇事不急着把世界判死刑。"
-  },
-  "A2": {
-    "L": "规则能绕就绕，舒服和自由往往排在前面。",
-    "M": "该守的时候守，该变通的时候也不死磕。",
-    "H": "秩序感较强，能按流程来就不爱即兴炸场。"
-  },
-  "A3": {
-    "L": "意义感偏低，容易觉得很多事都像在走过场。",
-    "M": "偶尔有目标，偶尔也想摆烂，人生观处于半开机。",
-    "H": "做事更有方向，知道自己大概要往哪边走。"
-  },
-  "Ac1": {
-    "L": "做事先考虑别翻车，避险系统比野心更先启动。",
-    "M": "有时想赢，有时只想别麻烦，动机比较混合。",
-    "H": "更容易被成果、成长和推进感点燃。"
-  },
-  "Ac2": {
-    "L": "做决定前容易多转几圈，脑内会议常常超时。",
-    "M": "会想，但不至于想死机，属于正常犹豫。",
-    "H": "拍板速度快，决定一下就不爱回头磨叽。"
-  },
-  "Ac3": {
-    "L": "执行力和死线有深厚感情，越晚越像要觉醒。",
-    "M": "能做，但状态看时机，偶尔稳偶尔摆。",
-    "H": "推进欲比较强，事情不落地心里都像卡了根刺。"
-  },
-  "So1": {
-    "L": "社交启动慢热，主动出击这事通常得攒半天气。",
-    "M": "有人来就接，没人来也不硬凑，社交弹性一般。",
-    "H": "更愿意主动打开场子，在人群里不太怕露头。"
-  },
-  "So2": {
-    "L": "关系里更想亲近和融合，熟了就容易把人划进内圈。",
-    "M": "既想亲近又想留缝，边界感看对象调节。",
-    "H": "边界感偏强，靠太近会先本能性后退半步。"
-  },
-  "So3": {
-    "L": "表达更直接，心里有啥基本不爱绕。",
-    "M": "会看气氛说话，真实和体面通常各留一点。",
-    "H": "对不同场景的自我切换更熟练，真实感会分层发放。"
-  }
-};
-    const dimensionOrder = ['S1','S2','S3','E1','E2','E3','A1','A2','A3','Ac1','Ac2','Ac3','So1','So2','So3'];
-
-    const DRUNK_TRIGGER_QUESTION_ID = 'drink_gate_q2';
 
     const app = {
-      shuffledQuestions: [],
-      answers: {},
-      previewMode: false
+      answers: {}
     };
 
     const screens = {
-      intro: document.getElementById('intro'),
-      test: document.getElementById('test'),
-      result: document.getElementById('result')
+      intro: document.getElementById("intro"),
+      test: document.getElementById("test"),
+      result: document.getElementById("result")
     };
 
-    const questionList = document.getElementById('questionList');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const submitBtn = document.getElementById('submitBtn');
-    const testHint = document.getElementById('testHint');
+    const questionSections = document.getElementById("questionSections");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const submitBtn = document.getElementById("submitBtn");
+    const testHint = document.getElementById("testHint");
+    const unlockSummary = document.getElementById("unlockSummary");
+    const typeCloud = document.getElementById("typeCloud");
 
     function showScreen(name) {
-      Object.entries(screens).forEach(([key, el]) => {
-        el.classList.toggle('active', key === name);
+      Object.entries(screens).forEach(([key, node]) => {
+        node.classList.toggle("active", key === name);
       });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function shuffle(array) {
-      const arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+    function stableHash(text) {
+      let hash = 2166136261;
+      for (let i = 0; i < text.length; i++) {
+        hash ^= text.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
       }
-      return arr;
+      return hash >>> 0;
     }
 
-    function getVisibleQuestions() {
-      const visible = [...app.shuffledQuestions];
-      const gateIndex = visible.findIndex(q => q.id === 'drink_gate_q1');
-      if (gateIndex !== -1 && app.answers['drink_gate_q1'] === 3) {
-        visible.splice(gateIndex + 1, 0, specialQuestions[1]);
+    function getUnlocks() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed.filter(code => TYPES[code] && TYPES[code].hidden) : [];
+      } catch (error) {
+        return [];
       }
-      return visible;
     }
 
-    function getQuestionMetaLabel(q) {
-      if (q.special) return '补充题';
-      return app.previewMode ? dimensionMeta[q.dim].name : '维度已隐藏';
+    function saveUnlocks(codes) {
+      try {
+        const merged = Array.from(new Set([...getUnlocks(), ...codes.filter(code => TYPES[code] && TYPES[code].hidden)]));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      } catch (error) {
+        return;
+      }
+      renderUnlockSummary();
+    }
+
+    function renderUnlockSummary() {
+      const unlocks = getUnlocks();
+      if (!unlocks.length) {
+        unlockSummary.textContent = "尚未解锁";
+        return;
+      }
+      unlockSummary.textContent = unlocks.map(code => `${code} · ${TYPES[code].name}`).join(" / ");
+    }
+
+    function renderTypeCloud() {
+      typeCloud.innerHTML = NORMAL_TYPE_CODES.map(code => {
+        const type = TYPES[code];
+        return `<span class="type-pill"><b>${type.code}</b>${type.name}</span>`;
+      }).join("");
     }
 
     function renderQuestions() {
-      const visibleQuestions = getVisibleQuestions();
-      questionList.innerHTML = '';
-      visibleQuestions.forEach((q, index) => {
-        const card = document.createElement('article');
-        card.className = 'question';
-        card.innerHTML = `
-          <div class="question-meta">
-            <div class="badge">第 ${index + 1} 题</div>
-            <div>${getQuestionMetaLabel(q)}</div>
+      questionSections.innerHTML = SECTIONS.map(section => {
+        const sectionQuestions = QUESTIONS.filter(question => question.section === section.key);
+        return `
+          <section class="section-card">
+            <div class="section-head">
+              <div class="section-index">${section.index}</div>
+              <div>
+                <h2>${section.title}</h2>
+                <p>${section.subtitle}</p>
+              </div>
+            </div>
+            <div class="question-grid">
+              ${sectionQuestions.map((question, index) => renderQuestion(question, sectionQuestions, index)).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+
+      questionSections.querySelectorAll("input[type='radio']").forEach(input => {
+        input.addEventListener("change", onAnswerChange);
+      });
+    }
+
+    function renderQuestion(question, sectionQuestions, index) {
+      const globalIndex = QUESTIONS.findIndex(item => item.id === question.id) + 1;
+      return `
+        <article class="question-card" data-question="${question.id}">
+          <div class="question-top">
+            <div class="question-order">第 ${globalIndex} 题</div>
+            <div class="question-type">${SECTIONS.find(section => section.key === question.section).title} · 小题 ${index + 1}</div>
           </div>
-          <div class="question-title">${q.text}</div>
-          <div class="options">
-            ${q.options.map((opt, i) => {
-              const code = ['A', 'B', 'C', 'D'][i] || String(i + 1);
-              const checked = app.answers[q.id] === opt.value ? 'checked' : '';
+          <div class="question-title">${question.prompt}</div>
+          <div class="option-list">
+            ${question.options.map((option, optionIndex) => {
+              const checked = app.answers[question.id] === optionIndex ? "checked" : "";
+              const selected = app.answers[question.id] === optionIndex ? "selected" : "";
               return `
-                <label class="option">
-                  <input type="radio" name="${q.id}" value="${opt.value}" ${checked} />
-                  <div class="option-code">${code}</div>
-                  <div>${opt.label}</div>
+                <label class="option ${selected}">
+                  <input type="radio" name="${question.id}" value="${optionIndex}" ${checked} />
+                  <span class="option-mark"></span>
+                  <span class="option-key">${option.key}</span>
+                  <span>${option.text}</span>
                 </label>
               `;
-            }).join('')}
+            }).join("")}
           </div>
-        `;
-        questionList.appendChild(card);
-      });
+        </article>
+      `;
+    }
 
-      questionList.querySelectorAll('input[type="radio"]').forEach(input => {
-        input.addEventListener('change', (e) => {
-          const { name, value } = e.target;
-          app.answers[name] = Number(value);
+    function onAnswerChange(event) {
+      const questionId = event.target.name;
+      const optionIndex = Number(event.target.value);
+      app.answers[questionId] = optionIndex;
 
-          if (name === 'drink_gate_q1') {
-            if (Number(value) !== 3) {
-              delete app.answers['drink_gate_q2'];
-            }
-            renderQuestions();
-            return;
-          }
-
-          updateProgress();
+      const card = questionSections.querySelector(`[data-question="${questionId}"]`);
+      if (card) {
+        card.querySelectorAll(".option").forEach((label, index) => {
+          label.classList.toggle("selected", index === optionIndex);
         });
-      });
+      }
 
       updateProgress();
     }
 
     function updateProgress() {
-      const visibleQuestions = getVisibleQuestions();
-      const total = visibleQuestions.length;
-      const done = visibleQuestions.filter(q => app.answers[q.id] !== undefined).length;
-      const percent = total ? (done / total) * 100 : 0;
+      const answered = QUESTIONS.filter(question => app.answers[question.id] !== undefined).length;
+      const total = QUESTIONS.length;
+      const percent = (answered / total) * 100;
+
       progressBar.style.width = `${percent}%`;
-      progressText.textContent = `${done} / ${total}`;
-      const complete = done === total && total > 0;
-      submitBtn.disabled = !complete;
-      testHint.textContent = complete
-        ? '都做完了。现在可以把你的电子魂魄交给结果页审判。'
-        : '全选完才会放行。世界已经够乱了，起码把题做完整。';
+      progressText.textContent = `${answered} / ${total}`;
+      submitBtn.disabled = answered !== total;
+
+      testHint.textContent = answered === total
+        ? "全部做完了。现在可以把你的日常毛病正式交给结果页审判。"
+        : "全做完再交卷。世界已经够乱了，至少把题先做完整。";
     }
 
-    function sumToLevel(score) {
-      if (score <= 3) return 'L';
-      if (score === 4) return 'M';
-      return 'H';
+    function clearAnswers() {
+      app.answers = {};
+      renderQuestions();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function levelNum(level) {
-      return { L: 1, M: 2, H: 3 }[level];
+    function getAnswerSignature() {
+      return QUESTIONS.map(question => {
+        const answerIndex = app.answers[question.id];
+        return answerIndex === undefined ? "x" : String(answerIndex);
+      }).join("");
     }
 
-    function parsePattern(pattern) {
-      return pattern.replace(/-/g, '').split('');
+    function getSelectedOption(question) {
+      const answerIndex = app.answers[question.id];
+      return answerIndex === undefined ? null : question.options[answerIndex];
     }
 
-    function getDrunkTriggered() {
-      return app.answers[DRUNK_TRIGGER_QUESTION_ID] === 2;
+    function scoreTypes() {
+      const totals = Object.fromEntries(NORMAL_TYPE_CODES.map(code => [code, 0]));
+      const sectionTotals = Object.fromEntries(SECTIONS.map(section => [section.key, Object.fromEntries(NORMAL_TYPE_CODES.map(code => [code, 0]))]));
+
+      QUESTIONS.forEach(question => {
+        const option = getSelectedOption(question);
+        if (!option) return;
+        totals[option.type] += 1;
+        sectionTotals[question.section][option.type] += 1;
+      });
+
+      return { totals, sectionTotals };
+    }
+
+    function sortCodesByScore(scoreMap, seedText) {
+      return [...NORMAL_TYPE_CODES].sort((left, right) => {
+        const scoreDiff = scoreMap[right] - scoreMap[left];
+        if (scoreDiff !== 0) return scoreDiff;
+
+        const leftTie = stableHash(`${seedText}:${left}`);
+        const rightTie = stableHash(`${seedText}:${right}`);
+        if (leftTie !== rightTie) return leftTie - rightTie;
+
+        return left.localeCompare(right);
+      });
+    }
+
+    function detectHiddenResults() {
+      const djbQuestions = QUESTIONS.filter(question => question.options.some(option => option.flags && option.flags.includes("djb")));
+      const xjbQuestions = QUESTIONS.filter(question => question.options.some(option => option.flags && option.flags.includes("xjb")));
+
+      const unlocked = [];
+
+      const djb = djbQuestions.every(question => {
+        const option = getSelectedOption(question);
+        return option && option.flags && option.flags.includes("djb");
+      });
+
+      const xjb = xjbQuestions.every(question => {
+        const option = getSelectedOption(question);
+        return option && option.flags && option.flags.includes("xjb");
+      });
+
+      if (djb) unlocked.push("DJB");
+      if (xjb) unlocked.push("XJB");
+      return unlocked;
     }
 
     function computeResult() {
-      const rawScores = {};
-      const levels = {};
-      Object.keys(dimensionMeta).forEach(dim => { rawScores[dim] = 0; });
+      const signature = getAnswerSignature();
+      const { totals, sectionTotals } = scoreTypes();
+      const rankedNormalCodes = sortCodesByScore(totals, signature);
+      const topNormalCode = rankedNormalCodes[0];
+      const topNormalType = TYPES[topNormalCode];
+      const hiddenUnlocked = detectHiddenResults();
 
-      questions.forEach(q => {
-        rawScores[q.dim] += Number(app.answers[q.id] || 0);
-      });
+      let finalCode = topNormalCode;
+      let resultMode = "你的主结果";
+      let noteMode = "常规结果";
 
-      Object.entries(rawScores).forEach(([dim, score]) => {
-        levels[dim] = sumToLevel(score);
-      });
-
-      const userVector = dimensionOrder.map(dim => levelNum(levels[dim]));
-      const ranked = NORMAL_TYPES.map(type => {
-        const vector = parsePattern(type.pattern).map(levelNum);
-        let distance = 0;
-        let exact = 0;
-        for (let i = 0; i < vector.length; i++) {
-          const diff = Math.abs(userVector[i] - vector[i]);
-          distance += diff;
-          if (diff === 0) exact += 1;
-        }
-        const similarity = Math.max(0, Math.round((1 - distance / 30) * 100));
-        return { ...type, ...TYPE_LIBRARY[type.code], distance, exact, similarity };
-      }).sort((a, b) => {
-        if (a.distance !== b.distance) return a.distance - b.distance;
-        if (b.exact !== a.exact) return b.exact - a.exact;
-        return b.similarity - a.similarity;
-      });
-
-      const bestNormal = ranked[0];
-      const drunkTriggered = getDrunkTriggered();
-
-      let finalType;
-      let modeKicker = '你的主类型';
-      let badge = `匹配度 ${bestNormal.similarity}% · 精准命中 ${bestNormal.exact}/15 维`;
-      let sub = '维度命中度较高，当前结果可视为你的第一人格画像。';
-      let special = false;
-      let secondaryType = null;
-
-      if (drunkTriggered) {
-        finalType = TYPE_LIBRARY.DRUNK;
-        secondaryType = bestNormal;
-        modeKicker = '隐藏人格已激活';
-        badge = '匹配度 100% · 酒精异常因子已接管';
-        sub = '乙醇亲和性过强，系统已直接跳过常规人格审判。';
-        special = true;
-      } else if (bestNormal.similarity < 60) {
-        finalType = TYPE_LIBRARY.HHHH;
-        modeKicker = '系统强制兜底';
-        badge = `标准人格库最高匹配仅 ${bestNormal.similarity}%`;
-        sub = '标准人格库对你的脑回路集体罢工了，于是系统把你强制分配给了 HHHH。';
-        special = true;
-      } else {
-        finalType = bestNormal;
+      if (hiddenUnlocked.length) {
+        const hiddenSorted = [...hiddenUnlocked].sort((left, right) => {
+          const leftTie = stableHash(`${signature}:hidden:${left}`);
+          const rightTie = stableHash(`${signature}:hidden:${right}`);
+          if (leftTie !== rightTie) return leftTie - rightTie;
+          return left.localeCompare(right);
+        });
+        finalCode = hiddenSorted[0];
+        resultMode = "隐藏结果已激活";
+        noteMode = hiddenUnlocked.length > 1 ? "双彩蛋命中" : "彩蛋命中";
       }
 
+      const finalType = TYPES[finalCode];
+      const sceneLeads = SECTIONS.map(section => {
+        const ranking = sortCodesByScore(sectionTotals[section.key], `${signature}:${section.key}`);
+        const leadCode = ranking[0];
+        const leadScore = sectionTotals[section.key][leadCode];
+        return {
+          section,
+          code: leadCode,
+          type: TYPES[leadCode],
+          score: leadScore
+        };
+      });
+
+      const topScore = hiddenUnlocked.length ? totals[topNormalCode] : totals[finalCode];
+      const isTieBreak = rankedNormalCodes.length > 1 && totals[rankedNormalCodes[0]] === totals[rankedNormalCodes[1]];
+
       return {
-        rawScores,
-        levels,
-        ranked,
-        bestNormal,
+        signature,
+        totals,
+        rankedNormalCodes,
+        topNormalCode,
+        topNormalType,
+        finalCode,
         finalType,
-        modeKicker,
-        badge,
-        sub,
-        special,
-        secondaryType
+        topScore,
+        resultMode,
+        noteMode,
+        hiddenUnlocked,
+        sceneLeads,
+        isTieBreak
       };
     }
 
-    function renderDimList(result) {
-      const dimList = document.getElementById('dimList');
-      dimList.innerHTML = dimensionOrder.map(dim => {
-        const level = result.levels[dim];
-        const explanation = DIM_EXPLANATIONS[dim][level];
+    function renderPoster(type) {
+      const posterImage = document.getElementById("posterImage");
+      const posterFallback = document.getElementById("posterFallback");
+      const posterCode = document.getElementById("posterCode");
+      const posterName = document.getElementById("posterName");
+      const posterFile = document.getElementById("posterFile");
+      const posterNote = document.getElementById("posterNote");
+      const extensions = ["png", "jpg", "jpeg", "webp"];
+      const basePosterPath = type.poster.replace(/\.(png|jpg|jpeg|webp)$/i, "");
+      const candidatePaths = extensions.map(extension => `${basePosterPath}.${extension}`);
+
+      posterCode.textContent = type.code;
+      posterName.textContent = type.name;
+      posterFile.textContent = `new_images/${type.code.toLowerCase()}.(png|jpg|jpeg|webp)`;
+      posterNote.textContent = type.hidden
+        ? "隐藏结果的图位也已经预留好。你后续把对应文件补进 new_images/ 目录即可。"
+        : "当前没有检测到这张海报，所以先显示占位卡；补上同名文件后会自动顶替。";
+
+      posterImage.hidden = true;
+      posterFallback.hidden = false;
+      posterImage.alt = `${type.code} ${type.name}`;
+
+      let currentIndex = 0;
+      const tryNextPoster = () => {
+        const nextPath = candidatePaths[currentIndex];
+        if (!nextPath) {
+          posterImage.removeAttribute("src");
+          posterImage.hidden = true;
+          posterFallback.hidden = false;
+          return;
+        }
+
+        currentIndex += 1;
+        posterImage.onload = () => {
+          posterImage.hidden = false;
+          posterFallback.hidden = true;
+        };
+        posterImage.onerror = () => {
+          tryNextPoster();
+        };
+        posterImage.src = nextPath;
+      };
+
+      tryNextPoster();
+    }
+
+    function renderRankList(result) {
+      const rankList = document.getElementById("rankList");
+      const topThree = result.rankedNormalCodes.slice(0, 3);
+      rankList.innerHTML = topThree.map((code, index) => {
+        const type = TYPES[code];
         return `
-          <div class="dim-item">
-            <div class="dim-item-top">
-              <div class="dim-item-name">${dimensionMeta[dim].name}</div>
-              <div class="dim-item-score">${level} / ${result.rawScores[dim]}分</div>
+          <div class="rank-item">
+            <div class="rank-item-top">
+              <strong>Top ${index + 1} · ${type.code} ${type.name}</strong>
+              <div class="rank-score">${result.totals[code]} 票</div>
             </div>
-            <p>${explanation}</p>
+            <span>${type.short}</span>
           </div>
         `;
-      }).join('');
+      }).join("");
+    }
+
+    function renderSceneList(result) {
+      const sceneList = document.getElementById("sceneList");
+      sceneList.innerHTML = result.sceneLeads.map(({ section, type, score }) => `
+        <div class="scene-item">
+          <div class="scene-item-top">
+            <strong>${section.title}</strong>
+            <div class="scene-score">${type.code} · ${score} 票</div>
+          </div>
+          <span>${type.name}：${type.short}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderNoteList(result) {
+      const noteList = document.getElementById("noteList");
+      const notes = [];
+
+      notes.push({
+        title: "结果模式",
+        text: result.noteMode === "常规结果"
+          ? "本次没有触发隐藏彩蛋，结果直接按照你的常规高频人格给出。"
+          : result.hiddenUnlocked.length > 1
+            ? `这次同时命中了 ${result.hiddenUnlocked.join(" / ")} 两个彩蛋，系统按固定签运规则发出了 ${result.finalCode}。`
+            : `你命中了隐藏结果 ${result.finalCode}，它已经写进当前浏览器的本地存档。`
+      });
+
+      notes.push({
+        title: "底层画像",
+        text: result.hiddenUnlocked.length
+          ? `如果先不看彩蛋，你的常规第一人格其实是 ${result.topNormalType.code} ${result.topNormalType.name}。`
+          : `你的常规第一人格就是 ${result.topNormalType.code} ${result.topNormalType.name}。`
+      });
+
+      notes.push({
+        title: "平分裁决",
+        text: result.isTieBreak
+          ? "这次第一名出现了同分，系统使用固定签运算法裁决。换浏览器刷新也不会改掉同一套答案的结果。"
+          : "第一名没有撞分，这次结果是直接票数胜出。"
+      });
+
+      noteList.innerHTML = notes.map(note => `
+        <div class="note-item">
+          <strong>${note.title}</strong>
+          <span>${note.text}</span>
+        </div>
+      `).join("");
     }
 
     function renderResult() {
       const result = computeResult();
       const type = result.finalType;
 
-      document.getElementById('resultModeKicker').textContent = result.modeKicker;
-      document.getElementById('resultTypeName').textContent = `${type.code}（${type.cn}）`;
-      document.getElementById('matchBadge').textContent = result.badge;
-      document.getElementById('resultTypeSub').textContent = result.sub;
-      document.getElementById('resultDesc').textContent = type.desc;
-      document.getElementById('posterCaption').textContent = type.intro;
-      document.getElementById('funNote').textContent = result.special
-        ? '本测试仅供娱乐。隐藏人格和傻乐兜底都属于作者故意埋的损招，请勿把它当成医学、心理学、相学、命理学或灵异学依据。'
-        : '本测试仅供娱乐，别拿它当诊断、面试、相亲、分手、招魂、算命或人生判决书。你可以笑，但别太当真。';
-
-      const posterBox = document.getElementById('posterBox');
-      const posterImage = document.getElementById('posterImage');
-      const imageSrc = TYPE_IMAGES[type.code];
-      if (imageSrc) {
-        posterImage.src = imageSrc;
-        posterImage.alt = `${type.code}（${type.cn}）`;
-        posterBox.classList.remove('no-image');
-      } else {
-        posterImage.removeAttribute('src');
-        posterImage.alt = '';
-        posterBox.classList.add('no-image');
+      if (result.hiddenUnlocked.length) {
+        saveUnlocks(result.hiddenUnlocked);
       }
 
-      renderDimList(result);
-      showScreen('result');
+      document.getElementById("resultMode").textContent = result.resultMode;
+      document.getElementById("resultName").textContent = `${type.code} ${type.name}`;
+      document.getElementById("resultSubtitle").textContent = type.tagline;
+      document.getElementById("resultDesc").textContent = type.desc;
+      document.getElementById("voteBadge").textContent = result.hiddenUnlocked.length
+        ? `常规最高票数 ${result.totals[result.topNormalCode]}`
+        : `主导票数 ${result.topScore}`;
+      document.getElementById("tieBadge").textContent = result.isTieBreak
+        ? "平分签运已触发"
+        : "票数直接胜出";
+
+      const hiddenBadge = document.getElementById("hiddenBadge");
+      hiddenBadge.classList.toggle("show", result.hiddenUnlocked.length > 0);
+      hiddenBadge.textContent = result.hiddenUnlocked.length
+        ? `隐藏结果 · ${result.hiddenUnlocked.join(" / ")}`
+        : "隐藏结果";
+
+      const keywordList = document.getElementById("keywordList");
+      keywordList.innerHTML = type.keywords.map(keyword => `<span class="chip">${keyword}</span>`).join("");
+
+      renderPoster(type);
+      renderRankList(result);
+      renderSceneList(result);
+      renderNoteList(result);
+      showScreen("result");
     }
 
-    function startTest(preview = false) {
-      app.previewMode = preview;
+    function startTest() {
       app.answers = {};
-      const shuffledRegular = shuffle(questions);
-      const insertIndex = Math.floor(Math.random() * shuffledRegular.length) + 1;
-      app.shuffledQuestions = [
-        ...shuffledRegular.slice(0, insertIndex),
-        specialQuestions[0],
-        ...shuffledRegular.slice(insertIndex)
-      ];
       renderQuestions();
-      showScreen('test');
+      updateProgress();
+      showScreen("test");
     }
 
-    document.getElementById('startBtn').addEventListener('click', () => startTest(false));
-    document.getElementById('backIntroBtn').addEventListener('click', () => showScreen('intro'));
-    document.getElementById('submitBtn').addEventListener('click', renderResult);
-    document.getElementById('restartBtn').addEventListener('click', () => startTest(false));
-    document.getElementById('toTopBtn').addEventListener('click', () => showScreen('intro'));
-  </script>
+    document.getElementById("startBtn").addEventListener("click", startTest);
+    document.getElementById("jumpToTypesBtn").addEventListener("click", () => {
+      document.getElementById("typePreview").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("backIntroBtn").addEventListener("click", () => showScreen("intro"));
+    document.getElementById("clearBtn").addEventListener("click", clearAnswers);
+    document.getElementById("submitBtn").addEventListener("click", renderResult);
+    document.getElementById("restartBtn").addEventListener("click", startTest);
+    document.getElementById("toTopBtn").addEventListener("click", () => showScreen("intro"));
 
+    renderTypeCloud();
+    renderUnlockSummary();
+    renderQuestions();
+    updateProgress();
+  </script>
 </body>
 </html>
